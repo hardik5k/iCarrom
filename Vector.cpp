@@ -6,6 +6,9 @@ class Vector{
 
     public:
         Vector(float x, float y){
+            setPos(x, y);
+        }
+        void setPos(float x, float y){
             this->x = x;
             this->y = y;
         }
