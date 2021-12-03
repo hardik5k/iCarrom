@@ -1,5 +1,5 @@
 class Circle{
-    private:
+    protected:
         float x,y;
         float radius;
     public:
