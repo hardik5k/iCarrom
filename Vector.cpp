@@ -5,10 +5,12 @@ class Vector{
         float x, y;
 
     public:
+        Vector(){}
+
         Vector(float x, float y){
-            setPos(x, y);
+            set(x, y);
         }
-        void setPos(float x, float y){
+        void set(float x, float y){
             this->x = x;
             this->y = y;
         }
