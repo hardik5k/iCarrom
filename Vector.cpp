@@ -48,7 +48,7 @@ class Vector{
             Vector u(this->x - v.x, this->y - v.y);
             return u;
         }
-        Vector sub(Vector v){
+        Vector add(Vector v){
             Vector u(this->x + v.x, this->y + v.y);
             return u;
         }
