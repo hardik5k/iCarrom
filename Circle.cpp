@@ -1,11 +1,12 @@
+#include"Vector.cpp"
+
 class Circle{
     protected:
-        float x,y;
+        Vector pos;
         float radius;
     public:
         Circle(float x, float y, float r){
-            this->x = x;
-            this->y = y;
+            pos.set(x, y);
             this->radius = r;
         }
 };
