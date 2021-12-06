@@ -9,6 +9,6 @@ class Board{
         int center_x, center_y;
         int width = 800, height = 600; 
         
-        friend class EventHandler; 
+        friend class Game; 
 
 };

@@ -13,4 +13,5 @@ class Coin : public Circle{
             this->acc.set(0, 0);
             imagesrc = Texture::LoadTexture(res,renderer);
         }
+        friend class Game ; 
 };

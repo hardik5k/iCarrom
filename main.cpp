@@ -1,9 +1,7 @@
 #include<bits/stdc++.h>
 #include<SDL2/SDL.h>
 #include<SDL2/SDL_image.h>
-#include "Button.h"
-#include "Holes.h"
-#include "Sides.h"
+
 #include<SDL2/SDL_image.h>
 #include "Game.cpp"
 Game* game = NULL; 

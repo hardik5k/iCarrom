@@ -1,0 +1,20 @@
+Hole left top : 23 22 
+Hole left bottom : 23 547
+Hole right top : 543 21 
+Hole right bottom : 543 543 
+
+Xcord of 
+Right border 546
+
+Xcord of Left border 20
+Ycord of Bottom 544
+Y cord of top 20 
+Geometric Center : 286 282 
+
+Valid grid to range 
+Bottom Left: 124 472
+Bottom Right : 444 472 (Valid Y cord 472-473)
+
+Valid grid to range 
+Top left : 121 94
+Top Right : 443 93 (Valid Y cord 91) 

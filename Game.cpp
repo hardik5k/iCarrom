@@ -39,7 +39,7 @@ void Game:: init(const char* title,int xcord,int ycord,int width,int height){
             
     }
     bg = new Object("textures/Board.png",renderer,0,0);
-    striker = new Object("textures/black.png",renderer,300,300);
+    striker = new Object("textures/striker.png",renderer,300,300);
     
     
 

@@ -1,4 +1,5 @@
 #include <cmath>
+#include "vector.h"
 // Basic Principle ---> Linear momentum is conserved during collisons
 
 //Equations derived using ----> 1. Conservation of total linear momentum of system, 2. e = v2 - v2 / u1 - u2
