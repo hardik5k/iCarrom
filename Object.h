@@ -13,5 +13,6 @@ private:
     SDL_Texture* obj;
     SDL_Rect srcRect,destRect;
     SDL_Renderer* renderer; 
+    friend class Game ;
 
 };

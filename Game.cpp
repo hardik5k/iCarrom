@@ -1,12 +1,19 @@
 #include "Game.h"
 #include "Object.cpp"
-
-
 #include <iostream>
 
+//for Rendering 
 SDL_Surface* loadimage,*temp ; 
 Object* striker,*bg; 
 SDL_Rect boardsrc, boarddest ;
+
+//For mouse movemnet 
+bool lmb ;
+SDL_Point mousepointer ;
+SDL_Rect* hitbox ; 
+SDL_Point clickoffset; 
+
+//Class methods 
 Game::Game()
 {}
 Game::~Game()
@@ -45,6 +52,39 @@ void Game::EventHandling(){
     switch(event.type){
         case SDL_QUIT:
             run = false;
+            break;
+        case SDL_MOUSEMOTION:
+            mousepointer = {event.motion.x,event.motion.y};
+            if(lmb && hitbox !=NULL){
+                // hitbox->x = mousepointer.x-clickoffset.x;
+                // hitbox->y = mousepointer.y-clickoffset.y;
+                striker->xcord =mousepointer.x-clickoffset.x;
+                striker->ycord = mousepointer.y-clickoffset.y;
+                
+                std::cout<<striker->destRect.x<<" "<<striker->destRect.y<<"\n";
+            }
+            break;
+        case SDL_MOUSEBUTTONUP:
+            if(lmb and event.button.button ==SDL_BUTTON_LEFT)
+            {
+                lmb = false ;
+                hitbox = NULL ;
+            }
+            break ; 
+        case SDL_MOUSEBUTTONDOWN:
+            if(!lmb && event.button.button == SDL_BUTTON_LEFT)
+            {
+                lmb = true ;
+                //add a for loop for all objects 
+
+                if(SDL_PointInRect(&mousepointer,&striker->destRect)){
+                    hitbox = &striker->destRect ; 
+                    clickoffset.x = mousepointer.x-striker->xcord;
+                    clickoffset.y = mousepointer.y-striker->ycord;
+                    std::cout<<clickoffset.x<<" "<<clickoffset.y<<"\n"; 
+                }
+                
+            }
             break;
         default:
             break;
