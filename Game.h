@@ -10,6 +10,7 @@ public :
     void renderscr();
     void cleanscr();
     bool rungame();
+    void setHighScore(float score);
     void EventHandling(); 
     
 private:

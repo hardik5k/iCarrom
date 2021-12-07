@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Object.cpp"
 #include <iostream>
+#include <fstream>
 
 //for Rendering 
 SDL_Surface* loadimage,*temp ; 
@@ -8,7 +9,7 @@ Object* striker,*bg;
 SDL_Rect boardsrc, boarddest ;
 
 //For mouse movemnet 
-bool lmb ;
+bool lmb; // left mouse button
 SDL_Point mousepointer ;
 SDL_Rect* hitbox ; 
 SDL_Point clickoffset; 
@@ -116,6 +117,27 @@ void Game:: cleanscr(){
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
     std::cout<<"Window and game ded\n"; 
+}
+
+void Game:: setHighScore(float score){
+    std::ifstream ifile("Leaderboard.txt");
+
+    if (!ifile.is_open()){
+        std:: cout<<"Could not fetch leaderboard" << std::endl;
+        return;
+    }
+
+    float highestScore;
+    ifile >> highestScore;
+
+
+    std::ofstream ofile("Leaderboard.txt");
+    if (score > highestScore){
+        ofile << score;
+    }
+    else{
+        ofile << highestScore;
+    }
 }
 
 bool Game :: rungame(){return run;}
