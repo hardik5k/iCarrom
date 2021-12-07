@@ -1,17 +1,17 @@
-#include"Circle.cpp"
-#include <SDL2/SDL.h> 
-class Coin : public Circle{
+#include"Vector.cpp"
+
+class Coin{
     protected:
-        Vector vel, acc;
-        float mass;
-        SDL_surface* imagesrc ;
+        Vector pos, vel, acc;
+        float mass, radius;
 
     public:
-        Coin(float x, float y, float r, float mass,string res) : Circle(x, y, r){
+        Coin(float x, float y, float r, float mass){
+            pos.set(x, y);
+            this->radius = r;
             this->mass = mass;
             this->vel.set(0 ,0);
             this->acc.set(0, 0);
-            imagesrc = Texture::LoadTexture(res,renderer);
         }
         friend class Game ; 
 };
