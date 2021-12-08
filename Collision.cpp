@@ -1,5 +1,7 @@
 #include <cmath>
-#include "vector.h"
+#include"Vector.cpp"
+
+float e = 0.95;
 // Basic Principle ---> Linear momentum is conserved during collisons
 
 //Equations derived using ----> 1. Conservation of total linear momentum of system, 2. e = v2 - v2 / u1 - u2
@@ -72,14 +74,18 @@ void resolveCollisionWithCoins(){
     coin2->vel = finalVelTangent2.add(finalVelNormal2);
 
 }
-
-void resolveCollisionWithSide(){
+void resolveCollisionWithBoard(Board* board, Coin* coin){
+    for (int i = 0; i < 4; i++){
+        resolveCollisionWithSide(coin, board->sides[i][0], board->sides[i][1]);
+    }
+}
+void resolveCollisionWithSide(Coin* coin, Vector edgeStart, Vector edgeEnd){
     // Calculate the overlap ---> distance between centre of coin and the closest point on line segment - radius of coin
-    Vector contactSide = edge->getEnd().sub(edge->getStart());
-    Vector temp = coin->pos.sub(edge->getStart()); // vector from edge to the coin
+    Vector contactSide = edgeEnd.sub(edgeStart);
+    Vector temp = coin->pos.sub(edgeStart); // vector from edge to the coin
     float sideLength = contactSide.getMagnitute();
     float x = max(0, min(sideLength, (contactSide.dotProduct(temp))));
-    Vector closestPoint = edge->getStart() + contactSide.normalize().multiply(x);
+    Vector closestPoint = edgeStart.add(contactSide.normalize().multiply(x));
 
     Vector overlapNormal = coin->pos.sub(closestPoint);
     float distance = overlapNormal.getMagnitute(1);
@@ -87,7 +93,7 @@ void resolveCollisionWithSide(){
     if (distance > coin->radius * coin->radius) return;
 
     // push back coin to offset overlap.
-    coin->pos = coin->pos.add(overlapNormal.normalize().multiply(distance));
+    coin->pos = coin->pos.add(overlapNormal.normalize().multiply(coin->radius - sqrt(distance)));
 
 
     // find out the final velocity vector after reflection.

@@ -1,4 +1,3 @@
-
 #include"Object.cpp"
 class Coin : public Object{
     protected:
