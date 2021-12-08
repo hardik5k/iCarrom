@@ -53,30 +53,49 @@ void resolveCollisionWithCoins(Coin* coin1, Coin* coin2){
     //Resolve velocities along tangent and normal at the contact point.
     //Using COM, find new velocity along normal.
     contactNormal = contactNormal.normalize();  // a unit vector along normal.
-    Vector contactTangent(contactNormal.getY(), -1 * contactNormal.getX());
+    Vector contactTangent(contactNormal.getY() * -1, contactNormal.getX());
 
     resolveOverlapWithCoins(coin1, coin2, overlap, contactNormal);
 
+    Vector sv = coin1->vel.sub(coin2->vel);
+    float x = sv.dotProduct(contactNormal);
 
-    // velocity component along normal
-    float velNormal1 = coin1->vel.dotProduct(contactNormal);
-    float velNormal2 = coin2->vel.dotProduct(contactNormal);
+    if (x >= 0) return;
 
-    // velocity component along common tangent
-    float velTangent1 = coin1->vel.dotProduct(contactTangent);
-    float velTangent2 = coin2->vel.dotProduct(contactTangent);
+    float ns = -1 * x;
+    float deltaVel = ns - x;
 
-    //final velocitiies after collision along normal
-    Vector finalVelNormal1 = contactNormal.multiply(velocityAfterCollisionForObject1(coin1->mass, coin2->mass, coin1->vel.getMagnitute(), coin2->vel.getMagnitute()));
-    Vector finalVelNormal2 = contactNormal.multiply(velocityAfterCollisionForObject2(coin1->mass, coin2->mass, coin1->vel.getMagnitute(), coin2->vel.getMagnitute()));
+    float totalMass = coin1->mass + coin2->mass;
+    float impulse = deltaVel/totalMass;
 
-    //final velocitiies after collision along tangent
-    Vector finalVelTangent1 = contactTangent.multiply(velTangent1);
-    Vector finalVelTangent2 = contactTangent.multiply(velTangent2);
+    Vector imp = contactNormal.multiply(impulse);
+    Vector v1 = imp.multiply(coin1->mass);
+    Vector v2 = imp.multiply(-1 * coin2->mass);
 
-    //Updating coin velocities 
-    coin1->vel = finalVelTangent1.add(finalVelNormal1);
-    coin2->vel = finalVelTangent2.add(finalVelNormal2);
+    coin1->vel = coin1->vel.add(v1);
+    coin2->vel = coin1->vel.add(v2);
+
+    
+
+    // // velocity component along normal
+    // float velNormal1 = coin1->vel.dotProduct(contactNormal);
+    // float velNormal2 = coin2->vel.dotProduct(contactNormal);
+
+    // // velocity component along common tangent
+    // float velTangent1 = coin1->vel.dotProduct(contactTangent);
+    // float velTangent2 = coin2->vel.dotProduct(contactTangent);
+
+    // //final velocitiies after collision along normal
+    // Vector finalVelNormal1 = contactNormal.multiply(velocityAfterCollisionForObject1(coin1->mass, coin2->mass, coin1->vel.getMagnitute(), coin2->vel.getMagnitute()));
+    // Vector finalVelNormal2 = contactNormal.multiply(velocityAfterCollisionForObject2(coin1->mass, coin2->mass, coin1->vel.getMagnitute(), coin2->vel.getMagnitute()));
+
+    // //final velocitiies after collision along tangent
+    // Vector finalVelTangent1 = contactTangent.multiply(velTangent1);
+    // Vector finalVelTangent2 = contactTangent.multiply(velTangent2);
+
+    // //Updating coin velocities 
+    // coin1->vel = finalVelTangent1.add(finalVelNormal1);
+    // coin2->vel = finalVelTangent2.add(finalVelNormal2);
 
 }
 
