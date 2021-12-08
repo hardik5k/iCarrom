@@ -1,13 +1,15 @@
 #include "Game.h"
-#include "Coin.cpp"
-
+// #include "Coin.cpp"
+// #include "Board.cpp"
+#include "Collision.cpp"
 #include <iostream>
 #include <fstream>
 
 //for Rendering 
 SDL_Surface* loadimage,*temp ; 
-Object* bg; 
+Board* bg; 
 Coin* striker;
+Coin* c;
 SDL_Rect boardsrc, boarddest ;
 Vector direction ;
 //For mouse movemnet 
@@ -44,8 +46,9 @@ void Game:: init(const char* title,int xcord,int ycord,int width,int height){
             }
             
     }
-    bg = new Object("textures/Board.png",renderer,0,0);
-    striker = new Coin("textures/striker.png",renderer,300,300, 20, 35);
+    bg = new Board("textures/Board.png",renderer,0,0);
+    striker = new Coin("textures/striker.png",renderer,285,282,17, 7);
+    c = new Coin("textures/black.png",renderer,50,282,17, 7);
     
     
 
@@ -129,7 +132,7 @@ void Game::EventHandling(){
                     lmb = false ;
                     hitbox = NULL ;
                     Vector temp(currx,curry);
-                    direction = striker->pos.sub(temp);
+                    striker->vel = striker->pos.sub(temp).normalize();
                     STATE = 3 ; 
                     
                 }
@@ -166,12 +169,12 @@ void Game::EventHandling(){
                 break;
             default:
               if (direction.x!=-1){
-                striker->pos = striker->pos.add(direction.normalize());
-                direction.x==-1;
-                std::cout<<striker->pos.x<< " "<<striker->pos.y;
-
-
-                if (striker->pos.x > 590) STATE = 1;
+                if (striker->vel.getMagnitute() < 0.1) striker->vel.set(0,0);
+                striker->pos = striker->pos.add(striker->vel);
+                c->pos = c->pos.add(c->vel);
+                resolveCollisionWithBoard(bg, striker);
+                resolveCollisionWithBoard(bg, c);
+                resolveCollisionWithCoins(striker, c);
                 break; 
             }
                
@@ -192,14 +195,16 @@ void Game::EventHandling(){
 void Game:: updatescr(){
  
     
-    striker->Update(34.33,34.33);
+    striker->Update(34.33, 34.33);
     bg->Update(600,600);
+    c->Update(40, 40);
 }
 void Game:: renderscr(){
     SDL_RenderClear(renderer);
      
     bg->Render();
     striker->Render();
+    c->Render();
     
     //Add more stuff to render here 
     SDL_RenderPresent(renderer);

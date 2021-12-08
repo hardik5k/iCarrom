@@ -1,6 +1,6 @@
 #include"Object.cpp"
 class Coin : public Object{
-    protected:
+    public:
         Vector vel, acc;
         float mass, radius;
 

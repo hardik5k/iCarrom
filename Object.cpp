@@ -1,7 +1,7 @@
 #include "Object.h"
 #include "TextureLoader.cpp"
 
-Object::Object(const char* texturename, SDL_Renderer* ren,int x,int y){
+Object::Object(const char* texturename, SDL_Renderer* ren, int x, int y){
     renderer = ren;
     obj = Texture::LoadTexture(texturename,ren);
     pos.set(x,y);

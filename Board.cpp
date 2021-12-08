@@ -1,15 +1,15 @@
 #include <vector> 
-#include "Vector.cpp"
 #include "Coin.cpp"
 
-class Board{
-    private:
-        vector<Vector> sides;
-        vector<Coin*> coins; 
+
+class Board : public Object{
+    public:
+        std::vector<Vector> sides;
+        std::vector<Coin*> coins; 
         int center_x, center_y;
         int width = 600, height = 600;  
     public:
-    Board(){
+    Board(const char* texturename, SDL_Renderer* ren, int x, int y) : Object( texturename, ren,  x,  y){
         Vector v1(20, 545);
         Vector v2(20, 20);
         Vector v3(545, 20);

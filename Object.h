@@ -6,10 +6,11 @@ public :
     ~Object() ; 
     void Update(int ,int);
     void Render(); 
+    Vector pos ; 
     
 
 protected:
-    Vector pos ; 
+   
 
     SDL_Texture* obj;
     SDL_Rect srcRect,destRect;
