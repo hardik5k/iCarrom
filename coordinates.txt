@@ -18,3 +18,5 @@ Bottom Right : 444 472 (Valid Y cord 472-473)
 Valid grid to range 
 Top left : 121 94
 Top Right : 443 93 (Valid Y cord 91) 
+
+(20, 545), (20, 20), (545, 20), (545, 545)

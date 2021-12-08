@@ -1,19 +1,24 @@
 #include "Game.h"
-#include "Object.cpp"
+#include "Coin.cpp"
+
 #include <iostream>
 #include <fstream>
 
 //for Rendering 
 SDL_Surface* loadimage,*temp ; 
-Object* striker,*bg; 
+Object* bg; 
+Coin* striker;
 SDL_Rect boardsrc, boarddest ;
-
+Vector direction ;
 //For mouse movemnet 
 bool lmb; // left mouse button
 SDL_Point mousepointer ;
 SDL_Rect* hitbox ; 
-SDL_Point clickoffset; 
-
+SDL_Point clickoffset;
+int currx,curry;  
+//For State Machine 
+int STATE = 2 ;
+bool isclicked = 0 ; 
 //Class methods 
 Game::Game()
 {}
@@ -40,7 +45,7 @@ void Game:: init(const char* title,int xcord,int ycord,int width,int height){
             
     }
     bg = new Object("textures/Board.png",renderer,0,0);
-    striker = new Object("textures/striker.png",renderer,300,300);
+    striker = new Coin("textures/striker.png",renderer,300,300, 20, 35);
     
     
 
@@ -49,53 +54,140 @@ void Game:: init(const char* title,int xcord,int ycord,int width,int height){
 void Game::EventHandling(){
     SDL_Event event; 
     SDL_PollEvent(&event);
+    if(STATE==1) //Striker set
+    {
+        switch(event.type){
+            case SDL_QUIT:
+                run = false;
+                break;
+            case SDL_MOUSEMOTION:
+                mousepointer = {event.motion.x,event.motion.y};
+                if(lmb && hitbox !=NULL){
+                // hitbox->x = mousepointer.x-clickoffset.x;
+                // hitbox->y = mousepointer.y-clickoffset.y;
+                    striker->pos.x =mousepointer.x-clickoffset.x;
+                    striker->pos.y = mousepointer.y-clickoffset.y;
+                
+                    std::cout<<striker->destRect.x<<" "<<striker->destRect.y<<"\n";
+                }
+                break;
+            case SDL_MOUSEBUTTONUP:
+      
 
-    switch(event.type){
+
+                if(lmb and event.button.button ==SDL_BUTTON_LEFT)
+                {
+                    lmb = false ;
+                    hitbox = NULL ;
+                }
+                break ; 
+            case SDL_MOUSEBUTTONDOWN:
+                if(!lmb && event.button.button == SDL_BUTTON_LEFT)
+                {
+                    lmb = true ;
+                //add a for loop for all objects 
+
+                    if(SDL_PointInRect(&mousepointer,&striker->destRect)){
+                        hitbox = &striker->destRect ; 
+                        clickoffset.x = mousepointer.x-striker->pos.x;
+                        clickoffset.y = mousepointer.y-striker->pos.y;
+                        std::cout<<clickoffset.x<<" "<<clickoffset.y<<"\n"; 
+                    }
+                
+                }
+            
+                break;
+            default:
+                break;
+            }
+        }
+    if(STATE == 2)
+    {
+        
+       
+        switch(event.type){
         case SDL_QUIT:
             run = false;
             break;
         case SDL_MOUSEMOTION:
             mousepointer = {event.motion.x,event.motion.y};
             if(lmb && hitbox !=NULL){
-                // hitbox->x = mousepointer.x-clickoffset.x;
-                // hitbox->y = mousepointer.y-clickoffset.y;
-                striker->xcord =mousepointer.x-clickoffset.x;
-                striker->ycord = mousepointer.y-clickoffset.y;
+                hitbox->x = mousepointer.x-clickoffset.x;
+                hitbox->y = mousepointer.y-clickoffset.y;
                 
-                std::cout<<striker->destRect.x<<" "<<striker->destRect.y<<"\n";
+                
+                
             }
-            break;
+            break; 
+            
         case SDL_MOUSEBUTTONUP:
+
             if(lmb and event.button.button ==SDL_BUTTON_LEFT)
-            {
-                lmb = false ;
-                hitbox = NULL ;
-            }
-            break ; 
+                {
+                    SDL_GetMouseState(&currx,&curry);
+                    std::cout<<currx<<" "<<curry<<"\n";  
+                    lmb = false ;
+                    hitbox = NULL ;
+                    Vector temp(currx,curry);
+                    direction = striker->pos.sub(temp);
+                    STATE = 3 ; 
+                    
+                }
+                break ; 
         case SDL_MOUSEBUTTONDOWN:
             if(!lmb && event.button.button == SDL_BUTTON_LEFT)
             {
+                 
                 lmb = true ;
-                //add a for loop for all objects 
-
                 if(SDL_PointInRect(&mousepointer,&striker->destRect)){
                     hitbox = &striker->destRect ; 
-                    clickoffset.x = mousepointer.x-striker->xcord;
-                    clickoffset.y = mousepointer.y-striker->ycord;
-                    std::cout<<clickoffset.x<<" "<<clickoffset.y<<"\n"; 
+                    clickoffset.x = mousepointer.x-striker->pos.x;
+                    clickoffset.y = mousepointer.y-striker->pos.y;
+                    std::cout<<"Object hit\n";
+                    isclicked = 1 ;
+
+                
                 }
                 
             }
+            
             break;
         default:
             break;
     }
+        
+}
+    if(STATE==3) //Striker set
+    {
+        switch(event.type)
+        {
+            case SDL_QUIT:
+                run = false;
+                break;
+            default:
+              if (direction.x!=-1){
+                striker->pos = striker->pos.add(direction.normalize());
+                direction.x==-1;
+                std::cout<<striker->pos.x<< " "<<striker->pos.y;
+
+
+                if (striker->pos.x > 590) STATE = 1;
+                break; 
+            }
+               
+        }
+
+        
+
+    }
+}
     
 
 
 
 
-}
+
+
 
 void Game:: updatescr(){
  

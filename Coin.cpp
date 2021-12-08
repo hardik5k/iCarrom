@@ -1,17 +1,16 @@
-#include"Vector.cpp"
 
-class Coin{
+#include"Object.cpp"
+class Coin : public Object{
     protected:
-        Vector pos, vel, acc;
+        Vector vel, acc;
         float mass, radius;
 
     public:
-        Coin(float x, float y, float r, float mass){
-            pos.set(x, y);
+        Coin(const char* texturename, SDL_Renderer* ren, int x, int y, int r, float mass) : Object( texturename, ren,  x,  y){
             this->radius = r;
             this->mass = mass;
             this->vel.set(0 ,0);
             this->acc.set(0, 0);
         }
-        friend class Game ; 
+        friend class Game; 
 };

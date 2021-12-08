@@ -1,14 +1,28 @@
 #include <SDL2/SDL.h>
 #include <SDL/SDL_image.h>
-
+#include <vector> 
+#include "Vector.cpp"
+#include "Coin.cpp"
 
 class Board{
     private:
-        //vector<> sides;
-        //vector<> holes;
+        vector<Vector> sides;
+        vector<Coin> coins ; 
         int center_x, center_y;
-        int width = 800, height = 600; 
+        int width = 600, height = 600; 
         
         friend class Game; 
+    public:
+    Board(){
+        Vector v1 = new Vector(20, 545);
+        Vector v2 = new Vector(20, 20);
+        Vector v3 = new Vector(545, 20);
+        Vector v4 = new Vector(545, 545);
+        sides.push_back(v1);
+        sides.push_back(v2);
+        sides.push_back(v3);
+        sides.push_back(v4);
+    }
+    friend class Game;
 
 };

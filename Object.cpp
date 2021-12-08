@@ -4,8 +4,7 @@
 Object::Object(const char* texturename, SDL_Renderer* ren,int x,int y){
     renderer = ren;
     obj = Texture::LoadTexture(texturename,ren);
-    xcord = x ;
-    ycord = y ;
+    pos.set(x,y);
 }
 Object::~Object()  {}
 void Object::Update(int x1,int y1)
@@ -19,8 +18,8 @@ void Object::Update(int x1,int y1)
     srcRect.x = 0;
     srcRect.y = 0;
 
-    destRect.x = xcord;
-    destRect.y = ycord; 
+    destRect.x = pos.getX();
+    destRect.y = pos.getY();  
     destRect.h = x1;
     destRect.w = y1;
     

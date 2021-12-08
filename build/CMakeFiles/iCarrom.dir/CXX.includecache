@@ -6,12 +6,18 @@
 
 #IncludeRegexTransform: 
 
+/home/mons/Desktop/iCarrom/Coin.cpp
+Object.cpp
+/home/mons/Desktop/iCarrom/Object.cpp
+
 /home/mons/Desktop/iCarrom/Game.cpp
 Game.h
 /home/mons/Desktop/iCarrom/Game.h
-Object.cpp
-/home/mons/Desktop/iCarrom/Object.cpp
+Coin.cpp
+/home/mons/Desktop/iCarrom/Coin.cpp
 iostream
+-
+fstream
 -
 
 /home/mons/Desktop/iCarrom/Game.h
@@ -27,6 +33,8 @@ TextureLoader.cpp
 /home/mons/Desktop/iCarrom/Object.h
 SDL2/SDL.h
 -
+Vector.cpp
+/home/mons/Desktop/iCarrom/Vector.cpp
 
 /home/mons/Desktop/iCarrom/TextureLoader.cpp
 TextureLoader.h
@@ -34,6 +42,10 @@ TextureLoader.h
 
 /home/mons/Desktop/iCarrom/TextureLoader.h
 SDL2/SDL.h
+-
+
+/home/mons/Desktop/iCarrom/Vector.cpp
+cmath
 -
 
 /home/mons/Desktop/iCarrom/main.cpp

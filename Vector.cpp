@@ -54,5 +54,6 @@ class Vector{
             Vector u(this->x + v.x, this->y + v.y);
             return u;
         }
+        friend class Game ; 
 
 };
