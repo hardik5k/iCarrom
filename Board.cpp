@@ -6,6 +6,7 @@ class Board : public Object{
     public:
         std::vector<Vector> sides;
         std::vector<Coin*> coins; 
+        std::vector<Coin*> coinsOnBoard; 
         int center_x, center_y;
         int width = 600, height = 600;  
     public:

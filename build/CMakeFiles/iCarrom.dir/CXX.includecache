@@ -6,15 +6,31 @@
 
 #IncludeRegexTransform: 
 
+/home/mons/Desktop/iCarrom/Board.cpp
+vector
+-
+Coin.cpp
+/home/mons/Desktop/iCarrom/Coin.cpp
+
 /home/mons/Desktop/iCarrom/Coin.cpp
 Object.cpp
 /home/mons/Desktop/iCarrom/Object.cpp
 
+/home/mons/Desktop/iCarrom/Collision.cpp
+cmath
+-
+algorithm
+-
+iostream
+-
+Board.cpp
+/home/mons/Desktop/iCarrom/Board.cpp
+
 /home/mons/Desktop/iCarrom/Game.cpp
 Game.h
 /home/mons/Desktop/iCarrom/Game.h
-Coin.cpp
-/home/mons/Desktop/iCarrom/Coin.cpp
+Collision.cpp
+/home/mons/Desktop/iCarrom/Collision.cpp
 iostream
 -
 fstream

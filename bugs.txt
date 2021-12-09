@@ -1,0 +1,2 @@
+1) Image radius vs Rectangle = Radius dont match 
+2) Positions are not center 

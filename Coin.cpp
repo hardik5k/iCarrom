@@ -10,6 +10,14 @@ class Coin : public Object{
             this->mass = mass;
             this->vel.set(0 ,0);
             this->acc.set(0, 0);
+            
+
+        }
+        void move(){
+            if (this->vel.getMagnitute() < 0.005) this->vel.set(0,0);
+                this->pos = this->pos.add(this->vel);
+                this->pos = this->pos.add(this->vel);
+                this->vel = this->vel.multiply(0.98);
         }
         friend class Game; 
 };

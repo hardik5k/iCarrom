@@ -47,9 +47,12 @@ void Game:: init(const char* title,int xcord,int ycord,int width,int height){
             
     }
     bg = new Board("textures/Board.png",renderer,0,0);
-    striker = new Coin("textures/striker.png",renderer,285,282,17, 7);
+    striker = new Coin("textures/striker.png",renderer,285,282,17, 35);
     c = new Coin("textures/black.png",renderer,50,282,17, 7);
-    
+    bg->coins.push_back(striker);
+    bg->coins.push_back(c);
+    bg->coinsOnBoard.push_back(c);
+    bg->coinsOnBoard.push_back(striker);
     
 
 
@@ -169,12 +172,21 @@ void Game::EventHandling(){
                 break;
             default:
               if (direction.x!=-1){
-                if (striker->vel.getMagnitute() < 0.1) striker->vel.set(0,0);
-                striker->pos = striker->pos.add(striker->vel);
-                c->pos = c->pos.add(c->vel);
-                resolveCollisionWithBoard(bg, striker);
-                resolveCollisionWithBoard(bg, c);
-                resolveCollisionWithCoins(striker, c);
+                for (int i = 0; i  < bg->coinsOnBoard.size(); i++){
+                    Coin* c1 = bg->coinsOnBoard[i];
+                    c1->move();
+                    resolveCollisionWithBoard(bg, c1);
+                    for (int j = 0; j  < bg->coinsOnBoard.size(); j++){
+                        if (i != j){
+                            Coin* c2 = bg->coinsOnBoard[j];
+                            resolveCollisionWithCoins(c1, c2);
+                        }
+                    }
+                }
+               
+                // resolveCollisionWithBoard(bg, striker);
+                // resolveCollisionWithBoard(bg, c);
+                // resolveCollisionWithCoins(striker, c);
                 break; 
             }
                

@@ -7,6 +7,12 @@
 Game* game = NULL; 
 
 int main(int argc, const char* argv[]){
+	const int FPS = 60;
+	const int frameDelay = 1000/FPS;
+
+	Uint32 framestart ;
+	int frametime ; 
+
 	game = new Game();
 	game->init("iCarrom",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600);
 	
@@ -14,6 +20,12 @@ int main(int argc, const char* argv[]){
 		game->EventHandling();
 		game->updatescr();
 		game->renderscr();
+
+		frametime = SDL_GetTicks()-framestart ; 
+		if(frameDelay > frametime){
+			SDL_Delay(frameDelay-frametime);
+		}
+
 
 		}
 	game->cleanscr(); 
