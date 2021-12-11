@@ -1,30 +1,28 @@
-#include <cmath>
-#include <algorithm>
-#include <iostream>
-// #include"Vector.cpp"
-// #include"Coin.cpp"
-#include"Board.cpp"
+#include"CollisionResolver.hpp"
 
-using namespace std;
+CollisionResolver:: CollisionResolver(float e){
+            this->e = e;
+}
 
-float e = 0.80;
-// Basic Principle ---> Linear momentum is conserved during collisons
 
+// Basic Principle ---> Linear momentum is conserved during collisons.
+    
 //Equations derived using ----> 1. Conservation of total linear momentum of system, 2. e = v2 - v2 / u1 - u2
-float velocityAfterCollisionForObject1(float m1, float m2, float v1, float v2){
+float CollisionResolver:: velocityAfterCollisionForObject1(float m1, float m2, float v1, float v2){
     return v1 * ((m1 - (e * m2))/(m1 + m2)) + v2 * (((1 + e) * m2)/(m1 + m2));
 }
-float velocityAfterCollisionForObject2(float m1, float m2, float v1, float v2){
+float float CollisionResolver:: velocityAfterCollisionForObject2(float m1, float m2, float v1, float v2){
     return v2 * ((m2 - (e * m1))/(m1 + m2)) + v1 * (((1 + e) * m1)/(m1 + m2));
 }
 
 // Calculate the overlap ---> distance between centre of two particles(l) - sum of their radii(r1 + r2)
-float getCollisionOverlapWithCoins(float r1, float r2, float sqrdistance){
+float CollisionResolver:: getCollisionOverlapWithCoins(float r1, float r2, float sqrdistance){
     if (sqrdistance <= pow((r1 + r2), 2)) 
         return (r1 + r2 - sqrt(sqrdistance));
     else return -1;
 }
-void resolveOverlapWithCoins(Coin* coin1, Coin* coin2, float overlap, Vector cn){ 
+
+void CollisionResolver:: resolveOverlapWithCoins(Coin* coin1, Coin* coin2, float overlap, Vector cn){ 
     // We should separate the objects by an amount proportional to their masses.
     // del_position1 = (m1/ m1 + m2) * overlap in direction of contact normal.
     // del_position2 = (m2/ m2 + m1) * overlap in direction opposite to contact normal.
@@ -39,7 +37,7 @@ void resolveOverlapWithCoins(Coin* coin1, Coin* coin2, float overlap, Vector cn)
     coin2->pos = coin2->pos.add(delta2);    
 }
 
-void resolveCollisionWithCoins(Coin* coin1, Coin* coin2){
+void CollisionResolver:: resolveCollisionWithCoins(Coin* coin1, Coin* coin2){
     Vector contactNormal = coin1->pos.sub(coin2->pos);
     float overlap = getCollisionOverlapWithCoins(coin1->radius, coin2->radius, contactNormal.getMagnitute(1));
     
@@ -57,23 +55,25 @@ void resolveCollisionWithCoins(Coin* coin1, Coin* coin2){
 
     resolveOverlapWithCoins(coin1, coin2, overlap, contactNormal);
 
-    // Vector sv = coin1->vel.sub(coin2->vel);
-    // float x = sv.dotProduct(contactNormal);
+    // Following is the impulse based method (slightly buggy)
 
-    // if (x >= 0) return;
+    /*Vector sv = coin1->vel.sub(coin2->vel);
+    float x = sv.dotProduct(contactNormal);
 
-    // float ns = -1 * x;
-    // float deltaVel = ns - x;
+    if (x >= 0) return;
 
-    // float totalMass = coin1->mass + coin2->mass;
-    // float impulse = deltaVel/totalMass;
+    float ns = -1 * x;
+    float deltaVel = ns - x;
 
-    // Vector imp = contactNormal.multiply(impulse);
-    // Vector v1 = imp.multiply(coin1->mass);
-    // Vector v2 = imp.multiply(-1 * coin2->mass);
+    float totalMass = coin1->mass + coin2->mass;
+    float impulse = deltaVel/totalMass;
 
-    // coin1->vel = coin1->vel.add(v1);
-    // coin2->vel = coin1->vel.add(v2);
+    Vector imp = contactNormal.multiply(impulse);
+    Vector v1 = imp.multiply(coin1->mass);
+    Vector v2 = imp.multiply(-1 * coin2->mass);
+
+    coin1->vel = coin1->vel.add(v1);
+    coin2->vel = coin1->vel.add(v2);*/
 
     
 
@@ -99,7 +99,7 @@ void resolveCollisionWithCoins(Coin* coin1, Coin* coin2){
 
 }
 
-void resolveCollisionWithSide(Coin* coin, Vector edgeStart, Vector edgeEnd){
+void CollisionResolver:: resolveCollisionWithSide(Coin* coin, Vector edgeStart, Vector edgeEnd){
     // Calculate the overlap ---> distance between centre of coin and the closest point on line segment - radius of coin
     Vector contactSide = edgeEnd.sub(edgeStart);
     Vector temp = coin->pos.sub(edgeStart); // vector from edge to the coin
@@ -129,13 +129,13 @@ void resolveCollisionWithSide(Coin* coin, Vector edgeStart, Vector edgeEnd){
     coin->vel = velAlongEdge.add(velAlongPerpendicular);
 
 }
-void resolveCollisionWithBoard(Board* board, Coin* coin){
+void CollisionResolver:: resolveCollisionWithBoard(Board* board, Coin* coin){
         for (int i = 0; i < 4; i++){
             resolveCollisionWithSide(coin, board->sides[i], board->sides[(i+1)%4]);
         }
         
 }
-void moveCoinToHole(Coin* c,Board* board){
+void CollisionResolver:: moveCoinToHole(Coin* c, Board* board){
 // if coin is not a striker ---> increase score, 
     // if (c->coinID == 0){
 
@@ -151,32 +151,15 @@ void moveCoinToHole(Coin* c,Board* board){
         }
     }
 }
-void checkIfCoinInNet(Coin* c, Vector h,Board* board){
-// if (distance between center of coin and net hole < hole radius) ---> move coin to hole()
+void CollisionResolver:: checkIfCoinInNet(Coin* c, Vector h, Board* board){
+// if (distance between center of coin and net hole < coin radius) ---> move coin to hole()
     Vector v = h.sub(c->pos);
     if (v.getMagnitute(1) < c->radius * c->radius) moveCoinToHole(c,board);
 
 }
-// void moveCoinToHole(Coin* c,Board* board){
-    
-// // if coin is not a striker ---> increase score, 
-//     if (c->coinID == 0){
-
-//         //score--;
-//         return;
-        
-
-//     }
-    for (int i = 0; i < coinsOnBoard.size(); i++){
-        if (c->coinID == coinsOnBoard[i]->coinID){
-            coinsOnBoard.erase(i);
-            return;
-        }
-    }
-}
-void resolveParticleInHoles(Coin* coin, Board* board){
+void CollisionResolver:: resolveParticleInHoles(Coin* coin, Board* board){
     for (int i = 0; i < 4; i++){
             checkIfCoinInNet(coin, board->holes[i],board);
         }
-    
 }
+

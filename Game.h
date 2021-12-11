@@ -1,4 +1,5 @@
 #include<SDL2/SDL.h>
+#include"CollisionResolver.hpp"
 class Game{
 
 public :     
@@ -15,6 +16,7 @@ public :
     
 private:
     bool run ;
+    CollsionResolver* cr;
     SDL_Window *window;
     SDL_Renderer * renderer ; 
 

@@ -1,13 +1,10 @@
 #include "Game.h"
-// #include "Coin.cpp"
-// #include "Board.cpp"
-#include "Collision.cpp"
 #include <iostream>
 #include <fstream>
 
 
 //Scoring System 
-int cpu_moves; int player_moves ;
+int cpu_moves; int player_moves;
 int cpu_score; int player_score;
 
 
@@ -16,7 +13,7 @@ SDL_Surface* loadimage,*temp ;
 Board* bg; 
 Coin* striker; Coin* c;
 SDL_Rect boardsrc, boarddest ;
-Vector direction ;
+
 
 
 //For mouse movemnet 
@@ -185,25 +182,19 @@ void Game::EventHandling(){
                 run = false;
                 break;
             default:
-              if (direction.x!=-1){
                 for (int i = 0; i  < bg->coinsOnBoard.size(); i++){
                     Coin* c1 = bg->coinsOnBoard[i];
                     c1->move();
-                    resolveCollisionWithBoard(bg, c1);
-                    resolveParticleInHoles(c1, bg);
+                    cr->resolveCollisionWithBoard(bg, c1);
+                    cr->resolveParticleInHoles(c1, bg);
                     for (int j = 0; j  < bg->coinsOnBoard.size(); j++){
                         if (i != j){
                             Coin* c2 = bg->coinsOnBoard[j];
-                            resolveCollisionWithCoins(c1, c2);
+                            cr->resolveCollisionWithCoins(c1, c2);
                         }
                     }
                 }
-               
-                // resolveCollisionWithBoard(bg, striker);
-                // resolveCollisionWithBoard(bg, c);
-                // resolveCollisionWithCoins(striker, c);
                 break; 
-            }
                
         }
 
