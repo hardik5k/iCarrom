@@ -4,7 +4,8 @@ class Object{
 public :
     Object(const char* texturename, SDL_Renderer* ren,int x,int y);
     ~Object() ; 
-    void Update(int ,int);
+    void Update(float, float);
+    void UpdateBoard(float , float );
     void Render(); 
     Vector pos ; 
     

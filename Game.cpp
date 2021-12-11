@@ -5,22 +5,33 @@
 #include <iostream>
 #include <fstream>
 
+
+//Scoring System 
+int cpu_moves; int player_moves ;
+int cpu_score; int player_score;
+
+
 //for Rendering 
 SDL_Surface* loadimage,*temp ; 
 Board* bg; 
-Coin* striker;
-Coin* c;
+Coin* striker; Coin* c;
 SDL_Rect boardsrc, boarddest ;
 Vector direction ;
+
+
 //For mouse movemnet 
 bool lmb; // left mouse button
 SDL_Point mousepointer ;
 SDL_Rect* hitbox ; 
 SDL_Point clickoffset;
 int currx,curry;  
+
+
 //For State Machine 
-int STATE = 2 ;
+int STATE = 2;
 bool isclicked = 0 ; 
+
+
 //Class methods 
 Game::Game()
 {}
@@ -47,8 +58,8 @@ void Game:: init(const char* title,int xcord,int ycord,int width,int height){
             
     }
     bg = new Board("textures/Board.png",renderer,0,0);
-    striker = new Coin("textures/striker.png",renderer,285,282,17, 35);
-    c = new Coin("textures/black.png",renderer,50,282,17, 7);
+    striker = new Coin("textures/striker.png",renderer,300,300,17, 35,-10);
+    c = new Coin("textures/black.png",renderer,50,282,17, 7,20);
     bg->coins.push_back(striker);
     bg->coins.push_back(c);
     bg->coinsOnBoard.push_back(c);
@@ -68,6 +79,7 @@ void Game::EventHandling(){
                 break;
             case SDL_MOUSEMOTION:
                 mousepointer = {event.motion.x,event.motion.y};
+                // std::cout<<mousepointer.x<<" "<<mousepointer.y<<"\n";
                 if(lmb && hitbox !=NULL){
                 // hitbox->x = mousepointer.x-clickoffset.x;
                 // hitbox->y = mousepointer.y-clickoffset.y;
@@ -75,6 +87,8 @@ void Game::EventHandling(){
                     striker->pos.y = mousepointer.y-clickoffset.y;
                 
                     std::cout<<striker->destRect.x<<" "<<striker->destRect.y<<"\n";
+                    
+
                 }
                 break;
             case SDL_MOUSEBUTTONUP:
@@ -176,6 +190,7 @@ void Game::EventHandling(){
                     Coin* c1 = bg->coinsOnBoard[i];
                     c1->move();
                     resolveCollisionWithBoard(bg, c1);
+                    resolveParticleInHoles(c1, bg);
                     for (int j = 0; j  < bg->coinsOnBoard.size(); j++){
                         if (i != j){
                             Coin* c2 = bg->coinsOnBoard[j];
@@ -205,15 +220,17 @@ void Game::EventHandling(){
 
 
 void Game:: updatescr(){
- 
-    
-    striker->Update(34.33, 34.33);
-    bg->Update(600,600);
-    c->Update(40, 40);
+    for (Coin* c : bg->coinsOnBoard){
+        c->Update(2 * c->radius, 2 * c->radius);
+    }    
+    bg->UpdateBoard(600,600);
 }
 void Game:: renderscr(){
     SDL_RenderClear(renderer);
-     
+      for (Coin* c : bg->coinsOnBoard){
+        c->Render();
+    } 
+    
     bg->Render();
     striker->Render();
     c->Render();

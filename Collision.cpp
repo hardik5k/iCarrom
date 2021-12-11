@@ -135,14 +135,48 @@ void resolveCollisionWithBoard(Board* board, Coin* coin){
         }
         
 }
-// void checkIfCoinInNet(){
-// // if (distance between center of coin and net hole < hole radius) ---> move coin to hole()
-// }
-// void moveCoinToHole(){
-// // if coin is not a striker ---> increase score, 
-// }
-// void resolveParticleInHole(){
-//     Vector v = board->holes[i].pos.sub(coin->pos);
+void moveCoinToHole(Coin* c,Board* board){
+// if coin is not a striker ---> increase score, 
+    // if (c->coinID == 0){
 
-//     if (v.getMagnitute(1))
-// }
+    //     //score--;
+    //     return;
+        
+
+    // }
+    for (int i = 0; i < board->coinsOnBoard.size(); i++){
+        if (c->coinID == board->coinsOnBoard[i]->coinID){
+            board->coinsOnBoard.erase(board->coinsOnBoard.begin()+i);
+            return;
+        }
+    }
+}
+void checkIfCoinInNet(Coin* c, Vector h,Board* board){
+// if (distance between center of coin and net hole < hole radius) ---> move coin to hole()
+    Vector v = h.sub(c->pos);
+    if (v.getMagnitute(1) < c->radius * c->radius) moveCoinToHole(c,board);
+
+}
+// void moveCoinToHole(Coin* c,Board* board){
+    
+// // if coin is not a striker ---> increase score, 
+//     if (c->coinID == 0){
+
+//         //score--;
+//         return;
+        
+
+//     }
+    for (int i = 0; i < coinsOnBoard.size(); i++){
+        if (c->coinID == coinsOnBoard[i]->coinID){
+            coinsOnBoard.erase(i);
+            return;
+        }
+    }
+}
+void resolveParticleInHoles(Coin* coin, Board* board){
+    for (int i = 0; i < 4; i++){
+            checkIfCoinInNet(coin, board->holes[i],board);
+        }
+    
+}
