@@ -6,13 +6,10 @@ Object::Object(const char* texturename, SDL_Renderer* ren, int x, int y){
     obj = Texture::LoadTexture(texturename,ren);
     pos.set(x,y);
 }
+
 Object::~Object()  {}
-void Object::Update(float h, float w)
-{
-    
-    //return an int by some manner 
-    // xcord = ;
-    // ycord = ;
+
+void Object::Update(float h, float w){
     srcRect.h = h;
     srcRect.w = w;
     srcRect.x = 0;
@@ -26,12 +23,8 @@ void Object::Update(float h, float w)
 
 
 }
-void Object::UpdateBoard(float h, float w)
-{
-    
-    //return an int by some manner 
-    // xcord = ;
-    // ycord = ;
+void Object::UpdateBoard(float h, float w){
+
     srcRect.h = h;
     srcRect.w = w;
     srcRect.x = 0;
@@ -45,8 +38,7 @@ void Object::UpdateBoard(float h, float w)
 
 
 }
-void Object::Render()
-{
+void Object::Render(){
     SDL_RenderCopy(renderer,obj,&srcRect,&destRect);
 
 }
