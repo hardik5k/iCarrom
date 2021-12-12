@@ -1,4 +1,4 @@
-#include"Object.cpp"
+#include"Object.h"
 
 class Coin : public Object{
     private:
@@ -7,8 +7,9 @@ class Coin : public Object{
         static int id;
         int coinID;
         int coinScore; 
+        
     public:
-        Coin();
+        Coin(const char* texturename, SDL_Renderer* ren, int x, int y, int r, float mass, int coinscore);
         ~Coin(); 
         void move();
 

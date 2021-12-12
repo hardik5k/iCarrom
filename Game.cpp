@@ -53,7 +53,9 @@ void Game:: init(const char* title,int xcord,int ycord,int width,int height){
                 run = false ;
             }
             
+
     }
+    cr = new CollsionResolver(0.80);
     bg = new Board("textures/Board.png",renderer,0,0);
     striker = new Coin("textures/striker.png",renderer,300,300,17, 35,-10);
     c = new Coin("textures/black.png",renderer,50,282,17, 7,20);

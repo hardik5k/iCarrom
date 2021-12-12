@@ -13,6 +13,7 @@ public :
     bool rungame();
     void setHighScore(float score);
     void EventHandling(); 
+    friend class Coin;
     
 private:
     bool run ;
