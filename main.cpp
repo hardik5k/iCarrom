@@ -27,7 +27,9 @@ int main(int argc, const char* argv[]){
 		}
 
 
-		}
+
+	}
+	
 	game->cleanscr(); 
 	return 0 ;
 }

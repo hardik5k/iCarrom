@@ -1,5 +1,5 @@
 #include <vector> 
-#include "Coin.hpp"
+#include "Coin.cpp"
 
 
 class Board : public Object{

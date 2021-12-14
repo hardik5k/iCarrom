@@ -1,23 +1,25 @@
 #include "Game.h"
+// #include "Coin.cpp"
+// #include "Board.cpp"
+#include "Collision.cpp"
 #include <iostream>
 #include <fstream>
 
-
 //Scoring System 
-int cpu_moves; int player_moves;
+int cpu_moves; int player_moves ;
 int cpu_score; int player_score;
 
 
 //for Rendering 
 SDL_Surface* loadimage,*temp ; 
 Board* bg; 
-Coin* striker; Coin* c;
+Coin* striker; Coin *c1, *c2, *c3, *c4, *c5, *c6, *c7, *c8; Coin* c0; 
 SDL_Rect boardsrc, boarddest ;
-
+Vector direction ;
 
 
 //For mouse movemnet 
-bool lmb; // left mouse button
+bool lmb = false; // left mouse button
 SDL_Point mousepointer ;
 SDL_Rect* hitbox ; 
 SDL_Point clickoffset;
@@ -25,7 +27,7 @@ int currx,curry;
 
 
 //For State Machine 
-int STATE = 2;
+int STATE = 1, prevState = 1;
 bool isclicked = 0 ; 
 
 
@@ -38,7 +40,7 @@ void Game:: init(const char* title,int xcord,int ycord,int width,int height){
     if(SDL_Init(SDL_INIT_EVERYTHING)==0){
         
             std::cout<<"Subsys_init\n";
-            window = SDL_CreateWindow(title,xcord,ycord,width,height,0);
+            window = SDL_CreateWindohttps://github.com/hardik5k/iCarrom.gitw(title,xcord,ycord,width,height,0);
             if(window){
                 std::cout<<"Window is working\n"; 
             }
@@ -53,24 +55,59 @@ void Game:: init(const char* title,int xcord,int ycord,int width,int height){
                 run = false ;
             }
             
-
     }
-    cr = new CollsionResolver(0.80);
     bg = new Board("textures/Board.png",renderer,0,0);
-    striker = new Coin("textures/striker.png",renderer,300,300,17, 35,-10);
-    c = new Coin("textures/black.png",renderer,50,282,17, 7,20);
+    striker = new Coin("textures/striker.png",renderer,140,490,18, 15,-10);
+    c1 = new Coin("textures/black1.png",renderer,258,301,17, 10,10);
+    c5 = new Coin("textures/white1.png",renderer,266,267,17, 10,20);
+    c2 = new Coin("textures/black2.png",renderer,299,257,17, 10,10);
+    c6 = new Coin("textures/white2.png",renderer,332,267,17, 10,20);
+    c3 = new Coin("textures/black3.png",renderer,342,301,17, 10,10);
+    c7 = new Coin("textures/white2.png",renderer,333,335,17, 10,20);
+    c4 = new Coin("textures/black4.png",renderer,299,343,17, 10,10);
+    c8 = new Coin("textures/white2.png",renderer,265,335,17, 10,20);
+    c0 = new Coin("textures/gold.png",renderer,300,300,17,10,50);
     bg->coins.push_back(striker);
-    bg->coins.push_back(c);
-    bg->coinsOnBoard.push_back(c);
+    bg->coins.push_back(c1);
+    bg->coins.push_back(c2);
+    bg->coins.push_back(c3);
+    bg->coins.push_back(c4);
+    bg->coins.push_back(c5);
+    bg->coins.push_back(c6);
+    bg->coins.push_back(c7);
+    bg->coins.push_back(c8);
+    bg->coins.push_back(c0);
     bg->coinsOnBoard.push_back(striker);
-    
+    bg->coinsOnBoard.push_back(c1);
+    bg->coinsOnBoard.push_back(c2);
+    bg->coinsOnBoard.push_back(c3);
+    bg->coinsOnBoard.push_back(c4);
+    bg->coinsOnBoard.push_back(c5);
+    bg->coinsOnBoard.push_back(c6);
+    bg->coinsOnBoard.push_back(c7);
+    bg->coinsOnBoard.push_back(c8);
+    bg->coinsOnBoard.push_back(c0); 
 
 
 }
+
+void Game::setStrikerPosition()
+{
+    if(prevState == 1)
+    {
+        return;
+    }
+    else
+    {
+        striker->pos.x = 140;
+        striker->pos.y = 490;
+    }
+}
+
 void Game::EventHandling(){
     SDL_Event event; 
     SDL_PollEvent(&event);
-    if(STATE==1) //Striker set
+    if(STATE==0) //Striker set
     {
         switch(event.type){
             case SDL_QUIT:
@@ -97,6 +134,7 @@ void Game::EventHandling(){
                 if(lmb and event.button.button ==SDL_BUTTON_LEFT)
                 {
                     lmb = false ;
+                    delete hitbox; 
                     hitbox = NULL ;
                 }
                 break ; 
@@ -120,9 +158,49 @@ void Game::EventHandling(){
                 break;
             }
         }
+
+    if(STATE == 1)
+    {
+        setStrikerPosition();
+        prevState = 1; 
+        
+        switch(event.type)
+        {
+            case SDL_KEYDOWN:
+                switch(event.key.keysym.sym)
+                {
+                    case SDLK_RIGHT:
+                        if(striker->pos.getX()<459)
+                        {
+                            std::cout << "Right" << std::endl;
+                            striker->pos.set(striker->pos.getX() + 4, striker->pos.getY());
+                            std::cout << striker->pos.getX() << std::endl;
+                        }
+                        break;
+
+                    case SDLK_LEFT:
+                        if(striker->pos.getX()>141)
+                        {
+                            striker->pos.set(striker->pos.getX() - 4, striker->pos.getY());
+                        }
+                        break;
+
+                    case SDLK_RETURN:
+                        cout << "Enter pressed" << endl;
+                        STATE = 2;
+                        break;
+                }
+            break;
+
+            case SDL_QUIT:
+                run = false;
+                break;
+        }
+    }
+
     if(STATE == 2)
     {
-        
+        prevState = 1;
        
         switch(event.type){
         case SDL_QUIT:
@@ -149,6 +227,7 @@ void Game::EventHandling(){
                     hitbox = NULL ;
                     Vector temp(currx,curry);
                     striker->vel = striker->pos.sub(temp).normalize();
+                    striker->vel.set(striker->vel.getX()/4, striker->vel.getY()/4);
                     STATE = 3 ; 
                     
                 }
@@ -178,25 +257,41 @@ void Game::EventHandling(){
 }
     if(STATE==3) //Striker set
     {
+        prevState = 2;
         switch(event.type)
         {
             case SDL_QUIT:
                 run = false;
                 break;
             default:
+              if (direction.x!=-1){
                 for (int i = 0; i  < bg->coinsOnBoard.size(); i++){
-                    Coin* c1 = bg->coinsOnBoard[i];
-                    c1->move();
-                    cr->resolveCollisionWithBoard(bg, c1);
-                    cr->resolveParticleInHoles(c1, bg);
+                    Coin* coin1 = bg->coinsOnBoard[i];
+                    coin1->move();
+                    resolveCollisionWithBoard(bg, coin1);
+                    resolveParticleInHoles(coin1, bg);
                     for (int j = 0; j  < bg->coinsOnBoard.size(); j++){
                         if (i != j){
-                            Coin* c2 = bg->coinsOnBoard[j];
-                            cr->resolveCollisionWithCoins(c1, c2);
+                            Coin* coin2 = bg->coinsOnBoard[j];
+                            resolveCollisionWithCoins(coin1, coin2);
                         }
                     }
                 }
+                int i = bg->coinsOnBoard.size();
+                for (Coin* c: bg->coinsOnBoard){
+                    if (c->vel.getMagnitute() == 0){
+                        i--;
+                    }
+                }
+                if (!i){
+                    prevState = STATE;
+                    STATE = 1;
+                } 
+                // resolveCollisionWithBoard(bg, striker);
+                // resolveCollisionWithBoard(bg, c);
+                // resolveCollisionWithCoins(striker, c);
                 break; 
+            }
                
         }
 
@@ -215,19 +310,27 @@ void Game::EventHandling(){
 void Game:: updatescr(){
     for (Coin* c : bg->coinsOnBoard){
         c->Update(2 * c->radius, 2 * c->radius);
-    }    
+    } 
     bg->UpdateBoard(600,600);
 }
 void Game:: renderscr(){
     SDL_RenderClear(renderer);
+    
+    
+    bg->Render();
+    // striker->Render();
+    // c1->Render();
+    // c2->Render();
+    // c3->Render();
+    // c4->Render();
+    // c5->Render();
+    // c6->Render();
+    // c7->Render();
+    // c8->Render();
+    // c0->Render(); 
       for (Coin* c : bg->coinsOnBoard){
         c->Render();
     } 
-    
-    bg->Render();
-    striker->Render();
-    c->Render();
-    
     //Add more stuff to render here 
     SDL_RenderPresent(renderer);
 }
