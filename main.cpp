@@ -3,7 +3,7 @@
 #include<SDL2/SDL_image.h>
 
 #include<SDL2/SDL_image.h>
-#include "Game.cpp"
+#include "Game.h"
 Game* game = NULL; 
 
 int main(int argc, const char* argv[]){

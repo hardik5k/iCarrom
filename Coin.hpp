@@ -1,7 +1,8 @@
+#pragma once 
 #include"Object.h"
 
 class Coin : public Object{
-    private:
+    public:
         Vector vel, acc;
         float mass, radius;
         static int id;
@@ -9,7 +10,7 @@ class Coin : public Object{
         int coinScore; 
         
     public:
-        Coin(const char* texturename, SDL_Renderer* ren, int x, int y, int r, float mass, int coinscore);
+        Coin(const char* texturename, SDL_Renderer* ren, int x, int y, int r, float mass, int coinscore) ;
         ~Coin(); 
         void move();
 

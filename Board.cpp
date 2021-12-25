@@ -1,16 +1,7 @@
 #include <vector> 
-#include "Coin.cpp"
-
-
-class Board : public Object{
-    public:
-        std::vector<Vector> sides;
-        std::vector<Coin*> coins; 
-        std::vector<Coin*> coinsOnBoard; 
-        std::vector<Vector> holes; 
-        int width = 600, height = 600;  
-    public:
-    Board(const char* texturename, SDL_Renderer* ren, int x, int y) : Object( texturename, ren,  x,  y){
+#include "Coin.hpp"
+#include "Board.hpp"
+ Board::Board(const char* texturename, SDL_Renderer* ren, int x, int y) : Object( texturename, ren,  x,  y){
         Vector v1(20, 580);
         Vector v2(20, 20);
         Vector v3(580, 20);
@@ -28,8 +19,4 @@ class Board : public Object{
         holes.push_back(h2);
         holes.push_back(h3);
         holes.push_back(h4);
-        
-    }
-    friend class Game;
-
-};
+ }

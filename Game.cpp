@@ -1,6 +1,6 @@
 #include "Game.h"
-// #include "Coin.cpp"
-// #include "Board.cpp"
+#include "Coin.hpp"
+#include "Board.hpp"
 #include "Collision.cpp"
 #include <iostream>
 #include <fstream>
@@ -40,7 +40,8 @@ void Game:: init(const char* title,int xcord,int ycord,int width,int height){
     if(SDL_Init(SDL_INIT_EVERYTHING)==0){
         
             std::cout<<"Subsys_init\n";
-            window = SDL_CreateWindohttps://github.com/hardik5k/iCarrom.gitw(title,xcord,ycord,width,height,0);
+            window = SDL_CreateWindow(title,xcord,ycord,width,height,0);
+
             if(window){
                 std::cout<<"Window is working\n"; 
             }

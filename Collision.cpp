@@ -1,9 +1,10 @@
 #include <cmath>
 #include <algorithm>
 #include <iostream>
-// #include"Vector.cpp"
-// #include"Coin.cpp"
-#include"Board.cpp"
+#include"Vector.cpp"
+#include"Coin.hpp"
+#include"Board.hpp"
+#pragma once
 
 using namespace std;
 
@@ -145,8 +146,18 @@ void moveCoinToHole(Coin* c,Board* board){
         
 
     // }
+    if(c->coinID ==0){
+        //set_striker_velocity = 0 
+        //if(firebyPlayer)
+        //bring striker to setPos(AI) for player  score -- numberofmoves++ return
+        //else
+        //SetPos(Player)
+      
+        //return 
+    }
     for (int i = 0; i < board->coinsOnBoard.size(); i++){
         if (c->coinID == board->coinsOnBoard[i]->coinID){
+            //score+=coin.value() 
             board->coinsOnBoard.erase(board->coinsOnBoard.begin()+i);
             return;
         }

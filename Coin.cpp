@@ -1,15 +1,7 @@
-#include"Object.cpp"
-class Coin : public Object{
-    public:
-        Vector vel, acc;
-        float mass, radius;
-        static int id;
-        int coinID;
-        int coinScore;
+#include"Object.h"
+#include "Coin.hpp"
 
-
-    public:
-        Coin(const char* texturename, SDL_Renderer* ren, int x, int y, int r, float mass,int coinscore) : Object( texturename, ren,  x,  y){
+Coin::Coin(const char* texturename, SDL_Renderer* ren, int x, int y, int r, float mass,int coinscore) : Object( texturename, ren,  x,  y){
             this->radius = r;
             this->mass = mass;
             this->vel.set(0 ,0);
@@ -18,8 +10,8 @@ class Coin : public Object{
             this->coinScore = coinscore; 
             
 
-        }
-        void move(){
+}
+ void Coin:: move(){
             if ((this->vel.getX() > 0.000002) && (this->vel.getY() > 0.000002))
             {
                 this->vel.set(this->vel.getX() - 0.000002, this->vel.getY() - 0.000002);
@@ -54,16 +46,5 @@ class Coin : public Object{
 
                 // // this->vel.set(this->vel.getX() - 0.1, this->vel.getY() - 0.1);
                 // this->vel = this->vel.multiply(0.9999);
-        }
-
-        /*void friction()
-        {
-            //if(this->vel.getMagnitute() > 0.1)
-            //{
-                this->vel.sub(Vector(1, 1));
-            //}
-        }*/
-        friend class Game;
-};
-
-int Coin:: id = 0;
+}
+int Coin:: Coin:: id = 0;

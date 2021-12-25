@@ -1,6 +1,7 @@
+#pragma once 
 #include <cmath>
 #include <algorithm>
-#include"Board.cpp"
+#include"Board.hpp"
 
 
 class CollsionResolver{

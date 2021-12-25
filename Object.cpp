@@ -1,5 +1,5 @@
 #include "Object.h"
-#include "TextureLoader.cpp"
+#include "TextureLoader.h"
 
 Object::Object(const char* texturename, SDL_Renderer* ren, int x, int y){
     renderer = ren;
