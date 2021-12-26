@@ -139,13 +139,14 @@ void resolveCollisionWithBoard(Board* board, Coin* coin){
 }
 int moveCoinToHole(Coin* c, Board* board){
     c->vel.set(0, 0);
-   
+    if (c->coinID == 0) return c->value;
     for (int i = 0; i < board->coinsOnBoard.size(); i++){
         if (c->coinID == board->coinsOnBoard[i]->coinID){
             board->coinsOnBoard.erase(board->coinsOnBoard.begin() + i);
-            return c->value;
+            break;
         }
     }
+    return c->value;
 }
 int checkIfCoinInNet(Coin* c, Vector h, Board* board){
 // if (distance between center of coin and net hole < hole radius) ---> move coin to hole()

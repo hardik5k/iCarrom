@@ -8,7 +8,7 @@ public :
 
     void init(const char* title,int xcord,int ycord,int width,int height); 
     void updatescr();
-    void setStrikerPosition();
+    void setStrikerPosition(int);
     void renderscr();
     void cleanscr();
     bool rungame();
