@@ -14,6 +14,7 @@ public :
     bool rungame();
     void setHighScore(float score);
     void EventHandling(); 
+    void updateScore(Coin*, int);
     
 private:
     bool run ;
