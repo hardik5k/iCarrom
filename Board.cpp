@@ -11,10 +11,10 @@
         sides.push_back(v3);
         sides.push_back(v4);
 
-        Vector h1(40, 564);
+        Vector h1(40, 565);
         Vector h2(40,40);
-        Vector h3(564, 40);
-        Vector h4(564, 564);
+        Vector h3(565, 40);
+        Vector h4(565, 565);
         holes.push_back(h1);
         holes.push_back(h2);
         holes.push_back(h3);
