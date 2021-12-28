@@ -11,12 +11,12 @@ int cpu_moves = 0, player_moves = 0;
 int cpu_total = 0, player_total = 0;
 float cpu_score = 0, player_score = 0;
 int current_player = 0; // 0 ---> user, 1 ---> computer
-Vector start_striker_pos(140, 490);
+Vector start_striker_pos(140, 460);
 
 //for Rendering 
 SDL_Surface* loadimage,*temp ; 
 Board* bg; 
-Coin* striker, c0, c1, c2, c3, c4, c5, c6, c7, c8; 
+Coin* striker, *c0, *c1, *c2, *c3, *c4, *c5, *c6, *c7, *c8; 
 SDL_Rect boardsrc, boarddest ;
 
 
@@ -93,13 +93,33 @@ void Game:: init(const char* title,int xcord,int ycord,int width,int height){
 
 void Game:: setStrikerPosition(int current_player)
 {
-    if(prevState == 1)
-    {
-        return;
-    }
+    if(current_player == 0)
+        {   if(prevState == 1)
+            {
+                return;
+            }
+            else
+            {
+            //cout<<start_striker_pos.getX()<<" "<<start_striker_pos.getY(); 
+            // striker->pos.set(start_striker_pos.getX(), start_striker_pos.getY());
+            striker->pos.x = 140;
+            striker->pos.y = 490;
+            }
+        }
+    
     else
     {
-        striker->pos.set(start_striker_pos.getX(), start_striker_pos.getY());
+        if(prevState == 4)
+        {
+            return ;
+        }
+        else
+        {
+            striker->pos.x = 140;
+            striker->pos.y = 110;
+
+        }
+
     }
 }
 
@@ -107,13 +127,14 @@ void Game:: updateScore(Coin* c, int score){
         if (!current_player){
             player_moves++; 
             player_total += score;
-            player_score = (1.0 * player_total)/player_moves;
+            //player_score = (1.0 * player_total)/player_moves;
         }
         else{
             cpu_moves++;
             cpu_total += score;
-            cpu_score = (1.0 * cpu_total)/cpu_moves;
+            //cpu_score = (1.0 * cpu_total)/cpu_moves;
         }
+        //cout<<player_total<<endl ; 
     return;
 }
 
@@ -132,7 +153,7 @@ void Game::EventHandling(){
                 switch(event.key.keysym.sym)
                 {
                     case SDLK_RIGHT:
-                        if(striker->pos.getX() < start_striker_pos.getX() - 1)
+                        if(striker->pos.getX() <459)
                         {
                             std::cout << "Right" << std::endl;
                             striker->pos.set(striker->pos.getX() + 4, striker->pos.getY());
@@ -141,7 +162,7 @@ void Game::EventHandling(){
                         break;
 
                     case SDLK_LEFT:
-                        if(striker->pos.getX() > start_striker_pos.getX() + 1)
+                        if(striker->pos.getX() >141)
                         {
                             striker->pos.set(striker->pos.getX() - 4, striker->pos.getY());
                         }
@@ -242,16 +263,51 @@ void Game::EventHandling(){
                 }
                 if (!i){
                     prevState = STATE;
-                    STATE = 4;
+                    if(current_player==1) {
+                        STATE = 1;
+                        current_player = 0 ;
+                    } 
+                    else{
+                        STATE = 4;
+                        current_player = 1 ; 
+                        
+                    }
                 }
+                
                 break; 
                
         }
-
+        
         
 
     }
+
+    if(STATE == 4 ) 
+    {
+        setStrikerPosition(current_player);
+        prevState = 4 ; 
+        srand(time(0));
+
+        int randpos = rand()%(459-141+1) +141; 
+        if(striker->pos.getX()<randpos){
+            striker->pos.x+=0.02 ; 
+        }
+        else
+
+        {   int randcoin = rand()%(bg->coinsOnBoard.size()-1)+1;
+            cout<<randcoin<<endl  ; 
+            Coin* c = bg->coinsOnBoard[randcoin] ; 
+            Vector v  = c->pos.sub(striker->pos) ;
+            cout<<v.getMagnitute()<<endl ; 
+            striker->vel = v.normalize(); 
+            striker->vel.set(striker->vel.getX()/4, striker->vel.getY()/4);
+            STATE = 3; 
+            cout<<"Should fire\n" ; 
+        }
+    }
+
 }
+
     
 
 

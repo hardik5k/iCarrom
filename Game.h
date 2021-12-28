@@ -1,5 +1,6 @@
 #pragma once 
 #include<SDL2/SDL.h>
+#include "Coin.hpp"
 class Game{
 
 public :     
