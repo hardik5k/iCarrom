@@ -16,8 +16,10 @@ Vector start_striker_pos(140, 460);
 //for Rendering 
 SDL_Surface* loadimage,*temp ; 
 Board* bg; 
-Coin* striker, *c0, *c1, *c2, *c3, *c4, *c5, *c6, *c7, *c8; 
+Coin* striker, *c0, *c1, *c2, *c3, *c4, *c5, *c6, *c7, *c8, *ima; 
 SDL_Rect boardsrc, boarddest ;
+bool flag = false;
+float x, y;
 
 
 //For mouse movemnet 
@@ -155,9 +157,7 @@ void Game::EventHandling(){
                     case SDLK_RIGHT:
                         if(striker->pos.getX() <459)
                         {
-                            std::cout << "Right" << std::endl;
                             striker->pos.set(striker->pos.getX() + 4, striker->pos.getY());
-                            std::cout << striker->pos.getX() << std::endl;
                         }
                         break;
 
@@ -193,6 +193,30 @@ void Game::EventHandling(){
             if(lmb && hitbox !=NULL){
                 hitbox->x = mousepointer.x-clickoffset.x;
                 hitbox->y = mousepointer.y-clickoffset.y;
+                float m = (striker->pos.y - mousepointer.y)/(striker->pos.x - mousepointer.x);
+                if(m>0 && mousepointer.y > striker->pos.y)
+                {
+                    x = striker->pos.x - 100*(1/sqrt(m*m + 1));
+                    y = striker->pos.y - 100*(m/sqrt(m*m + 1));
+                }
+                else if(m>0 && mousepointer.y < striker->pos.y)
+                {
+                    x = striker->pos.x + 100*(1/sqrt(m*m + 1));
+                    y = striker->pos.y + 100*(m/sqrt(m*m + 1));
+                }
+                else if(m<0 && mousepointer.y < striker->pos.y)
+                {
+                    x = striker->pos.x - 100*(1/sqrt(m*m + 1));
+                    y = striker->pos.y - 100*(m/sqrt(m*m + 1));
+                }
+                else if(m<0 && mousepointer.y > striker->pos.y)
+                {
+                    x = striker->pos.x + 100*(1/sqrt(m*m + 1));
+                    y = striker->pos.y + 100*(m/sqrt(m*m + 1));
+                }
+                ima = new Coin("textures/test.png", renderer, int(x), int(y), 17, 10, 0);
+                flag = true;
+                resolveCollisionWithBoard(bg, ima);
             }
             break; 
             
@@ -206,8 +230,9 @@ void Game::EventHandling(){
                     hitbox = NULL ;
                     Vector temp(currx,curry);
                     striker->vel = striker->pos.sub(temp).normalize();
-                    striker->vel.set(striker->vel.getX()/4, striker->vel.getY()/4);
+                    striker->vel.set(striker->vel.getX()/6, striker->vel.getY()/6);
                     STATE = 3 ; 
+                    flag = false;
                     
                 }
                 break ; 
@@ -320,6 +345,10 @@ void Game:: updatescr(){
     for (Coin* c : bg->coinsOnBoard){
         c->Update(2 * c->radius, 2 * c->radius);
     } 
+    if(flag)
+    {
+        ima->Update(2*ima->radius, 2*ima->radius);
+    }
     bg->UpdateBoard(600,600);
 }
 void Game:: renderscr(){
@@ -330,6 +359,10 @@ void Game:: renderscr(){
       for (Coin* c : bg->coinsOnBoard){
         c->Render();
     } 
+    if(flag)
+    {
+        ima->Render();
+    }
     //Add more stuff to render here 
     SDL_RenderPresent(renderer);
 }

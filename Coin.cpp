@@ -12,27 +12,27 @@ Coin::Coin(const char* texturename, SDL_Renderer* ren, int x, int y, int r, floa
 
 }
  void Coin:: move(){
-            if ((this->vel.getX() > 0.000002) && (this->vel.getY() > 0.000002))
+            if ((this->vel.getX() > 0.0000002) && (this->vel.getY() > 0.0000002))
             {
-                this->vel.set(this->vel.getX() - 0.000002, this->vel.getY() - 0.000002);
+                this->vel.set(this->vel.getX() - 0.0000002, this->vel.getY() - 0.0000002);
                 this->pos = this->pos.add(this->vel);
                 this->pos = this->pos.add(this->vel);
             }
-            else if(this->vel.getX() < -0.000002 && this->vel.getY() < -0.000002)
+            else if(this->vel.getX() < -0.0000002 && this->vel.getY() < -0.0000002)
             {
-                this->vel.set(this->vel.getX() + 0.000002, this->vel.getY() + 0.000002);
+                this->vel.set(this->vel.getX() + 0.0000002, this->vel.getY() + 0.0000002);
                 this->pos = this->pos.add(this->vel);
                 this->pos = this->pos.add(this->vel);
             }
-            else if(this->vel.getX() < -0.000002 && this->vel.getY() > 0.000002)
+            else if(this->vel.getX() < -0.0000002 && this->vel.getY() > 0.0000002)
             {
-                this->vel.set(this->vel.getX() + 0.000002, this->vel.getY() - 0.000002);
+                this->vel.set(this->vel.getX() + 0.0000002, this->vel.getY() - 0.0000002);
                 this->pos = this->pos.add(this->vel);
                 this->pos = this->pos.add(this->vel);
             }
-            else if(this->vel.getX() > 0.000002 && this->vel.getY() < -0.000002)
+            else if(this->vel.getX() > 0.0000002 && this->vel.getY() < -0.0000002)
             {
-                this->vel.set(this->vel.getX() - 0.000002, this->vel.getY() + 0.000002);
+                this->vel.set(this->vel.getX() - 0.0000002, this->vel.getY() + 0.0000002);
                 this->pos = this->pos.add(this->vel);
                 this->pos = this->pos.add(this->vel);
             }
