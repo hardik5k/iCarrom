@@ -11,7 +11,7 @@ CollisionResolver:: CollisionResolver(float e){
 float CollisionResolver:: velocityAfterCollisionForObject1(float m1, float m2, float v1, float v2){
     return v1 * ((m1 - (e * m2))/(m1 + m2)) + v2 * (((1 + e) * m2)/(m1 + m2));
 }
-float float CollisionResolver:: velocityAfterCollisionForObject2(float m1, float m2, float v1, float v2){
+float CollisionResolver:: velocityAfterCollisionForObject2(float m1, float m2, float v1, float v2){
     return v2 * ((m2 - (e * m1))/(m1 + m2)) + v1 * (((1 + e) * m1)/(m1 + m2));
 }
 
