@@ -2,6 +2,7 @@
 #include "Coin.hpp"
 #include "Board.hpp"
 #include "Collision.cpp"
+#include <SDL2/SDL_ttf.h>
 #include <iostream>
 #include <fstream>
 
@@ -21,6 +22,13 @@ SDL_Rect boardsrc, boarddest ;
 bool flag = false;
 float x, y;
 
+//For Rendering font
+TTF_Font *Sans = TTF_OpenFont("Sans.ttf", 24);
+SDL_Color Black = {0, 0, 0};
+SDL_Surface *surface_message;
+SDL_Texture *Message;
+SDL_Rect Message_rect;
+std::string str = "";
 
 //For mouse movemnet 
 bool lmb = false; // left mouse button
@@ -298,6 +306,12 @@ void Game::EventHandling(){
                         
                     }
                 }
+
+                //str.append(player_total);
+                /*Message_rect.x = 510;
+                Message_rect.y = 30;
+                Message_rect.w = 100;
+                Message_rect.h = 100;*/
                 
                 break; 
                
@@ -363,10 +377,21 @@ void Game:: renderscr(){
     {
         ima->Render();
     }
+    std::string newstr = "Player1: " + std::to_string(player_score);
+    newstr.append(str);
+    surface_message = TTF_RenderText_Solid(Sans, newstr.c_str(), Black);
+    Message = SDL_CreateTextureFromSurface(renderer, surface_message);
+    Message_rect.x = 600;
+    Message_rect.y = 30;
+    Message_rect.w = 100;
+    Message_rect.h = 100;
+    SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
     //Add more stuff to render here 
     SDL_RenderPresent(renderer);
 }
 void Game:: cleanscr(){
+    SDL_FreeSurface(surface_message);
+    SDL_DestroyTexture(Message);
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
