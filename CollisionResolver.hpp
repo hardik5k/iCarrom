@@ -4,7 +4,7 @@
 #include"Board.hpp"
 
 
-class CollsionResolver{
+class CollisionResolver{
     private:
         float e;
 
