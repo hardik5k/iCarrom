@@ -50,3 +50,17 @@ void Object::Render()
     SDL_RenderCopy(renderer,obj,&srcRect,&destRect);
 
 }
+
+void Object::UpdateMainMenu(float h,float w) 
+{
+    srcRect.h = h;
+    srcRect.w = w;
+    srcRect.x = 0;
+    srcRect.y = 0;
+
+    destRect.x = 0;
+    destRect.y = 0;
+    destRect.h = h;
+    destRect.w = w;
+    
+}
