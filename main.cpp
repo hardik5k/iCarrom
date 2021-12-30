@@ -2,10 +2,19 @@
 #include<SDL2/SDL.h>
 #include<SDL2/SDL_image.h>
 
-#include<SDL2/SDL_image.h>
 #include "Game.h"
+<<<<<<< HEAD
 using namespace std;
+=======
+
+#include "MainMenu.hpp"
+#include "ScreenManager.hpp"
+>>>>>>> 1171ccb2ad70202c6ac6ebf5abc0cfa7e9ad317e
 Game* game = NULL; 
+MainMenu* mgame = NULL;
+Screens* s = NULL ; 
+int firsttime = 1 ; 
+
 
 int main(int argc, const char* argv[]){
 	const int FPS = 60;
@@ -15,21 +24,54 @@ int main(int argc, const char* argv[]){
 	int frametime ; 
 
 	game = new Game();
-	game->init("iCarrom",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600);
 	
-	while(game->rungame()){
-		game->EventHandling();
-		game->updatescr();
-		game->renderscr();
+
+	mgame = new MainMenu();
+	mgame->init("iCarrom",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600);
+	
+	s = (Screens*)mgame ;  
+	
+	while(s->rungame()){
+		s->EventHandling();
+		s->updatescr();
+		s->renderscr();
 
 		frametime = SDL_GetTicks()-framestart ; 
 		if(frameDelay > frametime){
 			SDL_Delay(frameDelay-frametime);
 		}
 
+		if(s->snum==0){
+		if(firsttime !=1)
+			if(game->rungame()==false){
+				cout<<"IN THIS \n"; 
+				game->cleanscr(); 
+			}
+		s=(Screens*)mgame;
+		firsttime = 1;
+		
+		
+		}
+		else
+		{
+			
+			if(firsttime==1){
+				game->init("iCarrom",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600);
+				firsttime =-1;
+
+			}
+			s=(Screens*)game;
+
+		}
+		
+		 
+		
+
+
+
 
 
 	}
-	game->cleanscr(); 
+	s->cleanscr(); 
 	return 0 ;
 }

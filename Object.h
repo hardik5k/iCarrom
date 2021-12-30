@@ -9,6 +9,7 @@ public :
     void UpdateBoard(float , float );
     void Render(); 
     Vector pos ; 
+    void UpdateMainMenu(float,float); 
     
 
 protected:

@@ -1,12 +1,16 @@
 #pragma once 
 #include<SDL2/SDL.h>
-#include "Coin.hpp"
+#include<SDL2/SDL_image.h>
 #include "ScreenManager.hpp"
-class Game : public Screens{
+using namespace std; 
+class Screens;
+class Game;
+
+class MainMenu : public Screens{
 
 public :     
-    Game();
-    ~Game();
+    MainMenu();
+    ~MainMenu();
 
     void init(const char* title,int xcord,int ycord,int width,int height); 
     void updatescr();
@@ -16,13 +20,10 @@ public :
     bool rungame();
     void setHighScore(float score);
     void EventHandling(); 
-    void updateScore(Coin*, int);
-    void displayHighScore();
+    
+    
 private:
     bool run ;
     SDL_Window *window;
     SDL_Renderer * renderer ; 
-    float highestScore ; 
-    
-
 };

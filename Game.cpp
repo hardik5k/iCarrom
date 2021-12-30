@@ -157,6 +157,12 @@ void Game::EventHandling(){
     SDL_Event event; 
     SDL_PollEvent(&event);
 
+    if(bg->coinsOnBoard.size()<=1){
+        //call highscore function 
+        run = false ;
+
+    }
+
     if(STATE == 1)
     {
         setStrikerPosition(current_player);
@@ -192,6 +198,15 @@ void Game::EventHandling(){
             case SDL_QUIT:
                 run = false;
                 break;
+            case SDL_WINDOWEVENT:
+            if(event.window.event ==SDL_WINDOWEVENT_CLOSE)
+            {
+                run = false;
+                this->snum = 0;
+                cout<<"Main game quit\n";
+                break;
+
+            }
         }
     }
 
@@ -201,6 +216,15 @@ void Game::EventHandling(){
         case SDL_QUIT:
             run = false;
             break;
+        case SDL_WINDOWEVENT:
+            if(event.window.event ==SDL_WINDOWEVENT_CLOSE)
+            {
+                run = false;
+                this->snum = 0;
+                cout<<"Main game quit\n";
+                break;
+
+            }
         case SDL_MOUSEMOTION:
             mousepointer = {event.motion.x,event.motion.y};
             if(lmb && hitbox !=NULL){
@@ -280,6 +304,15 @@ void Game::EventHandling(){
             case SDL_QUIT:
                 run = false;
                 break;
+            case SDL_WINDOWEVENT:
+            if(event.window.event ==SDL_WINDOWEVENT_CLOSE)
+            {
+                run = false;
+                this->snum = 0;
+                cout<<"Main game quit\n";
+                break;
+
+            }
             default:
                 for (int i = 0; i  < bg->coinsOnBoard.size(); i++){
                     Coin* coin1 = bg->coinsOnBoard[i];
