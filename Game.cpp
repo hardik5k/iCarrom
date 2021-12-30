@@ -399,16 +399,7 @@ void Game:: cleanscr(){
 }
 
 void Game:: setHighScore(float score){
-    std::ifstream ifile("Leaderboard.txt");
-
-    if (!ifile.is_open()){
-        std:: cout<<"Could not fetch leaderboard" << std::endl;
-        return;
-    }
-
-    float highestScore;
-    ifile >> highestScore;
-
+    
 
     std::ofstream ofile("Leaderboard.txt");
     if (score > highestScore){
@@ -417,6 +408,18 @@ void Game:: setHighScore(float score){
     else{
         ofile << highestScore;
     }
+}
+void Game:: displayHighScore(){
+     std::ifstream ifile("Leaderboard.txt");
+
+    if (!ifile.is_open()){
+        std:: cout<<"Could not fetch leaderboard" << std::endl;
+        return;
+    }
+
+    
+    ifile >> highestScore;
+
 }
 
 bool Game :: rungame(){return run;}

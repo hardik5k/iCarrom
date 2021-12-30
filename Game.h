@@ -16,12 +16,12 @@ public :
     void setHighScore(float score);
     void EventHandling(); 
     void updateScore(Coin*, int);
-    
+    void displayHighScore();
 private:
     bool run ;
     SDL_Window *window;
     SDL_Renderer * renderer ; 
-
+    float highestScore ; 
     
 
 };
