@@ -104,7 +104,7 @@ void CollisionResolver:: resolveCollisionWithSide(Coin* coin, Vector edgeStart, 
     Vector contactSide = edgeEnd.sub(edgeStart);
     Vector temp = coin->pos.sub(edgeStart); // vector from edge to the coin
     float sideLength = contactSide.getMagnitute();
-    float x = fmax(0, min(sideLength, (contactSide.dotProduct(temp)/sideLength)));
+    float x = fmax(0,std:: min(sideLength, (contactSide.dotProduct(temp)/sideLength)));
     Vector closestPoint = edgeStart.add(contactSide.normalize().multiply(x));
     Vector overlapNormal = coin->pos.sub(closestPoint);
     float distance = overlapNormal.getMagnitute(1);
