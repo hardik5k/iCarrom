@@ -23,8 +23,8 @@ bool flag = false;
 float x, y;
 
 //For Rendering font
-TTF_Font *Sans = TTF_OpenFont("Sans.ttf", 24);
-SDL_Color Black = {0, 0, 0};
+TTF_Font *font;
+SDL_Color Black = {255, 0, 0};
 SDL_Surface *surface_message;
 SDL_Texture *Message;
 SDL_Rect Message_rect;
@@ -49,6 +49,7 @@ Game::Game()
 Game::~Game()
 {}
 void Game:: init(const char* title,int xcord,int ycord,int width,int height){
+    TTF_Init();
     if(SDL_Init(SDL_INIT_EVERYTHING)==0){
         
             std::cout<<"Subsys_init\n";
@@ -68,6 +69,10 @@ void Game:: init(const char* title,int xcord,int ycord,int width,int height){
                 run = false ;
             }
     }
+
+    font = TTF_OpenFont("Font.ttf", 24);
+    if (!font)  printf("TTF_OpenFont: %s\n", TTF_GetError());
+
     bg = new Board("textures/Board.png",renderer,0,0);
     striker = new Coin("textures/striker.png",renderer,140,490,18, 15,-10);
     c1 = new Coin("textures/black1.png",renderer,258,301,17, 10, 10);
@@ -307,6 +312,15 @@ void Game::EventHandling(){
                     }
                 }
 
+                std::string newstr = "Player1: " + std::to_string(player_total);
+                surface_message = TTF_RenderText_Solid(font, newstr.c_str(), Black);
+                Message = SDL_CreateTextureFromSurface(renderer, surface_message);
+                SDL_FreeSurface(surface_message);
+                Message_rect.x = 600;
+                Message_rect.y = 30;
+                Message_rect.w = 200;
+                Message_rect.h = 100;
+
                 //str.append(player_total);
                 /*Message_rect.x = 510;
                 Message_rect.y = 30;
@@ -339,7 +353,7 @@ void Game::EventHandling(){
             Vector v  = c->pos.sub(striker->pos) ;
             cout<<v.getMagnitute()<<endl ; 
             striker->vel = v.normalize(); 
-            striker->vel.set(striker->vel.getX()/4, striker->vel.getY()/4);
+            striker->vel.set(striker->vel.getX()/6, striker->vel.getY()/6);
             STATE = 3; 
             cout<<"Should fire\n" ; 
         }
@@ -377,20 +391,11 @@ void Game:: renderscr(){
     {
         ima->Render();
     }
-    std::string newstr = "Player1: " + std::to_string(player_score);
-    newstr.append(str);
-    surface_message = TTF_RenderText_Solid(Sans, newstr.c_str(), Black);
-    Message = SDL_CreateTextureFromSurface(renderer, surface_message);
-    Message_rect.x = 600;
-    Message_rect.y = 30;
-    Message_rect.w = 100;
-    Message_rect.h = 100;
     SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
     //Add more stuff to render here 
     SDL_RenderPresent(renderer);
 }
 void Game:: cleanscr(){
-    SDL_FreeSurface(surface_message);
     SDL_DestroyTexture(Message);
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);

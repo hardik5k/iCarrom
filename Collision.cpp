@@ -8,7 +8,7 @@
 
 using namespace std;
 
-float e = 0.50;
+float e = 0.70;
 float eBoard = 0.80;
 // Basic Principle ---> Linear momentum is conserved during collisons
 
