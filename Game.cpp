@@ -35,7 +35,7 @@ bool lmb = false; // left mouse button
 SDL_Point mousepointer ;
 SDL_Rect* hitbox ; 
 SDL_Point clickoffset;
-int currx,curry;  
+int currx,curry;
 
 
 //For State Machine 
@@ -58,7 +58,7 @@ void Game:: init(const char* title,int xcord,int ycord,int width,int height){
             if(window){
                 std::cout<<"Window is working\n"; 
             }
-            renderer = SDL_CreateRenderer(window,-1,0);
+            renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
             if(renderer){
                 std::cout<<"Successful rendering of window\n";
                 SDL_SetRenderDrawColor(renderer,255,255,255,255);
@@ -134,7 +134,6 @@ void Game:: setStrikerPosition(int current_player)
             striker->pos.y = 110;
 
         }
-
     }
 }
 
@@ -378,14 +377,6 @@ void Game::EventHandling(){
 
 }
 
-    
-
-
-
-
-
-
-
 void Game:: updatescr(){
     for (Coin* c : bg->coinsOnBoard){
         c->Update(2 * c->radius, 2 * c->radius);
@@ -448,8 +439,6 @@ void Game:: renderscr(){
     Message_rect2.y = 130;
     Message_rect2.w = 200;
     Message_rect2.h = 100;
-
-
 
     SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
     SDL_RenderCopy(renderer, Message2, NULL, &Message_rect2);
