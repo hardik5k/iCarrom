@@ -3,13 +3,10 @@
 #include<SDL2/SDL_image.h>
 
 #include "Game.h"
-<<<<<<< HEAD
 using namespace std;
-=======
 
 #include "MainMenu.hpp"
 #include "ScreenManager.hpp"
->>>>>>> 1171ccb2ad70202c6ac6ebf5abc0cfa7e9ad317e
 Game* game = NULL; 
 MainMenu* mgame = NULL;
 Screens* s = NULL ; 

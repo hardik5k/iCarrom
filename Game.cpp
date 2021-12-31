@@ -24,10 +24,10 @@ float x, y;
 
 //For Rendering font
 TTF_Font *font;
-SDL_Color Black = {255, 0, 0};
-SDL_Surface *surface_message;
-SDL_Texture *Message;
-SDL_Rect Message_rect;
+SDL_Color Black = {0, 0, 0};
+SDL_Surface *surface_message, *surface_message2;
+SDL_Texture *Message, *Message2;
+SDL_Rect Message_rect, Message_rect2;
 std::string str = "";
 
 //For mouse movemnet 
@@ -70,7 +70,7 @@ void Game:: init(const char* title,int xcord,int ycord,int width,int height){
             }
     }
 
-    font = TTF_OpenFont("Font.ttf", 24);
+    font = TTF_OpenFont("Font2.otf", 20);
     if (!font)  printf("TTF_OpenFont: %s\n", TTF_GetError());
 
     bg = new Board("textures/Board.png",renderer,0,0);
@@ -343,23 +343,7 @@ void Game::EventHandling(){
                         current_player = 1 ; 
                         
                     }
-                }
-
-                std::string newstr = "Player1: " + std::to_string(player_total);
-                surface_message = TTF_RenderText_Solid(font, newstr.c_str(), Black);
-                Message = SDL_CreateTextureFromSurface(renderer, surface_message);
-                SDL_FreeSurface(surface_message);
-                Message_rect.x = 600;
-                Message_rect.y = 30;
-                Message_rect.w = 200;
-                Message_rect.h = 100;
-
-                //str.append(player_total);
-                /*Message_rect.x = 510;
-                Message_rect.y = 30;
-                Message_rect.w = 100;
-                Message_rect.h = 100;*/
-                
+                }                
                 break; 
                
         }
@@ -424,12 +408,59 @@ void Game:: renderscr(){
     {
         ima->Render();
     }
+
+    //Rendering score for player1
+    std::string newstr = "Player1: " + std::to_string(player_total);
+    surface_message = TTF_RenderText_Solid(font, newstr.c_str(), Black);
+    if (surface_message == NULL)
+    {
+        printf("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+    }
+    
+    Message = SDL_CreateTextureFromSurface(renderer, surface_message);
+    if (Message == NULL)
+    {
+        printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+    }
+    
+    SDL_FreeSurface(surface_message);
+    Message_rect.x = 600;
+    Message_rect.y = 30;
+    Message_rect.w = 200;
+    Message_rect.h = 100;
+
+    //Rendering score for player2
+    std::string newstr2 = "Player2: " + std::to_string(cpu_total);
+    surface_message2 = TTF_RenderText_Solid(font, newstr2.c_str(), Black);
+    if (surface_message2 == NULL)
+    {
+        printf("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+    }
+
+    Message2 = SDL_CreateTextureFromSurface(renderer, surface_message2);
+    if (Message2 == NULL)
+    {
+        printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+    }
+
+    SDL_FreeSurface(surface_message2);
+    Message_rect2.x = 600;
+    Message_rect2.y = 130;
+    Message_rect2.w = 200;
+    Message_rect2.h = 100;
+
+
+
     SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
+    SDL_RenderCopy(renderer, Message2, NULL, &Message_rect2);
+
+    SDL_DestroyTexture(Message);
+    SDL_DestroyTexture(Message2);
     //Add more stuff to render here 
     SDL_RenderPresent(renderer);
 }
 void Game:: cleanscr(){
-    SDL_DestroyTexture(Message);
+    //SDL_DestroyTexture(Message);
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
