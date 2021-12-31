@@ -26,9 +26,9 @@ int main(int argc, const char* argv[]){
 	mgame = new MainMenu();
 	mgame->init("iCarrom",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600);
 	
-	s = (Screens*)mgame ;  
-	
-	while(s->rungame()){
+	s = (Screens*)mgame;
+	while(s->rungame())
+	{
 		s->EventHandling();
 		s->updatescr();
 		s->renderscr();
@@ -37,37 +37,34 @@ int main(int argc, const char* argv[]){
 		if(frameDelay > frametime){
 			SDL_Delay(frameDelay-frametime);
 		}
-
-		if(s->snum==0){
-		if(firsttime !=1)
-			if(game->rungame()==false){
+		if(s->snum==0)
+		{
+			if(firsttime !=1)
+				if(game->rungame()==false)
+				{
 				cout<<"IN THIS \n"; 
 				game->cleanscr(); 
-			}
-		s=(Screens*)mgame;
-		firsttime = 1;
-		
-		
+				}
+			s=(Screens*)mgame;
+			firsttime = 1;
 		}
 		else
 		{
-			
-			if(firsttime==1){
-				game->init("iCarrom",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600);
-				firsttime =-1;
-
+			if(firsttime==1)
+			{
+				if(s->snum==1)
+				{
+					game->init("iCarrom",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600);
+					firsttime=-1;
+				}
+				else if(s->snum==2)
+				{
+					cout<<"exiting"<<endl;
+					break;
+				}
+				s=(Screens*)game;
 			}
-			s=(Screens*)game;
-
 		}
-		
-		 
-		
-
-
-
-
-
 	}
 	s->cleanscr(); 
 	return 0 ;
