@@ -96,7 +96,7 @@ void Game:: init(const char* title,int xcord,int ycord,int width,int height){
     // bg->coins.push_back(c8);
     bg->coinsOnBoard.push_back(striker);
     bg->coinsOnBoard.push_back(c0); 
-    bg->coinsOnBoard.push_back(c1);
+    //bg->coinsOnBoard.push_back(c1);
     // bg->coinsOnBoard.push_back(c2);
     // bg->coinsOnBoard.push_back(c3);
     // bg->coinsOnBoard.push_back(c4);
@@ -119,8 +119,6 @@ void Game:: setStrikerPosition(int current_player)
             }
             else
             {
-            //cout<<start_striker_pos.getX()<<" "<<start_striker_pos.getY(); 
-            // striker->pos.set(start_striker_pos.getX(), start_striker_pos.getY());
             striker->pos.x = 140;
             striker->pos.y = 490;
             }
@@ -163,7 +161,8 @@ void Game::EventHandling(){
     if(bg->coinsOnBoard.size()<=1){
         //update highscore function 
         setHighScore(player_total);
-        run = false ;
+        //run = false ;
+        this->snum = 0;
 
     }
 
@@ -421,12 +420,12 @@ void Game:: renderscr(){
     
     SDL_FreeSurface(surface_message);
     Message_rect.x = 600;
-    Message_rect.y = 30;
+    Message_rect.y = 450;
     Message_rect.w = 200;
     Message_rect.h = 100;
 
     //Rendering score for player2
-    std::string newstr2 = "Player2: " + std::to_string(cpu_total);
+    std::string newstr2 = "Computer: " + std::to_string(cpu_total);
     surface_message2 = TTF_RenderText_Solid(font, newstr2.c_str(), Black);
     if (surface_message2 == NULL)
     {
@@ -441,7 +440,7 @@ void Game:: renderscr(){
 
     SDL_FreeSurface(surface_message2);
     Message_rect2.x = 600;
-    Message_rect2.y = 130;
+    Message_rect2.y = 50;
     Message_rect2.w = 200;
     Message_rect2.h = 100;
 
@@ -471,6 +470,11 @@ void Game:: setHighScore(float score){
     else{
         ofile << highestScore;
     }
+}
+
+float Game:: getHighScore()
+{
+    return highestScore;
 }
 void Game:: displayHighScore(){
      std::ifstream ifile("Leaderboard.txt");

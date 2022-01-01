@@ -12,10 +12,10 @@ SDL_Rect btn1 = {600,150,200,100} ;    SDL_Rect btn2  = {600, 400, 200, 100 };  
 //For Rendering font
 TTF_Font *font1;
 SDL_Color Black1 = {0, 0, 0};
-SDL_Surface *surface_message_play, *surface_message_exit,*surface_message_help;
-SDL_Texture *message_play,*message_exit,*message_help;
-SDL_Rect Message_rect3,Message_rect1, Message_rect4 ; 
-std::string str1 = "";
+SDL_Surface *surface_message_play, *surface_message_exit,*surface_message_help, *surface_message_highscore;
+SDL_Texture *message_play,*message_exit,*message_help,*message_highscore;
+SDL_Rect Message_rect3,Message_rect1, Message_rect4, Message_rect5 ; 
+std::string str1 = "", str2 = "";
 
 
 //For mouse movemnet 
@@ -27,12 +27,16 @@ int mcurrx,mcurry;
 
 
 //For State Machine 
-bool misclicked = 0 ; 
+bool misclicked = 0 ;
+
+float highestscore;
 
 
 
 //Class methods 
-MainMenu::MainMenu(){}
+MainMenu::MainMenu(float hs){
+    highestscore = hs;
+}
 MainMenu::~MainMenu(){}
 void MainMenu::init(const char* title,int xcord,int ycord,int width,int height)
 {
@@ -75,6 +79,26 @@ void MainMenu::renderscr(){
     SDL_RenderFillRect(renderer, &btn1);
     SDL_RenderFillRect(renderer, &btn2);
     SDL_RenderFillRect(renderer, &btn3);
+
+    //Rendering score for player1
+    std::string str2 = "Highscore: " + std::to_string((int)highestscore);
+    surface_message_highscore = TTF_RenderText_Solid(font1, str2.c_str(), Black1);
+    if (surface_message_highscore == NULL)
+    {
+        printf("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+    }
+    
+    message_highscore = SDL_CreateTextureFromSurface(renderer, surface_message_highscore);
+    if (message_highscore == NULL)
+    {
+        printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+    }
+    
+    SDL_FreeSurface(surface_message_highscore);
+    Message_rect5.x = 150;
+    Message_rect5.y = 425;
+    Message_rect5.w = 300;
+    Message_rect5.h = 100;
     
     // Rendering Play
     std::string newstr1 = "PLAY";
@@ -139,9 +163,11 @@ void MainMenu::renderscr(){
     SDL_RenderCopy(renderer, message_play, NULL, &Message_rect1);
     SDL_RenderCopy(renderer, message_exit, NULL, &Message_rect3);
     SDL_RenderCopy(renderer, message_help, NULL, &Message_rect4);
+    SDL_RenderCopy(renderer, message_highscore, NULL, &Message_rect5);
     SDL_DestroyTexture(message_play);
     SDL_DestroyTexture(message_exit);
     SDL_DestroyTexture(message_help);
+    SDL_DestroyTexture(message_highscore);
     SDL_RenderPresent(renderer);
 }
 void MainMenu::cleanscr(){

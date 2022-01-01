@@ -18,6 +18,7 @@ public :
     void EventHandling(); 
     void updateScore(Coin*, int);
     void displayHighScore();
+    float getHighScore();
 private:
     bool run ;
     SDL_Window *window;

@@ -9,7 +9,7 @@ class Game;
 class MainMenu : public Screens{
 
 public :     
-    MainMenu();
+    MainMenu(float);
     ~MainMenu();
 
     void init(const char* title,int xcord,int ycord,int width,int height); 
