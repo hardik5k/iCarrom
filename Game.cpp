@@ -87,27 +87,31 @@ void Game:: init(const char* title,int xcord,int ycord,int width,int height){
     bg->coins.push_back(striker);
     bg->coins.push_back(c0);
     bg->coins.push_back(c1);
-    bg->coins.push_back(c2);
-    bg->coins.push_back(c3);
-    bg->coins.push_back(c4);
-    bg->coins.push_back(c5);
-    bg->coins.push_back(c6);
-    bg->coins.push_back(c7);
-    bg->coins.push_back(c8);
+    // bg->coins.push_back(c2);
+    // bg->coins.push_back(c3);
+    // bg->coins.push_back(c4);
+    // bg->coins.push_back(c5);
+    // bg->coins.push_back(c6);
+    // bg->coins.push_back(c7);
+    // bg->coins.push_back(c8);
     bg->coinsOnBoard.push_back(striker);
     bg->coinsOnBoard.push_back(c0); 
     bg->coinsOnBoard.push_back(c1);
-    bg->coinsOnBoard.push_back(c2);
-    bg->coinsOnBoard.push_back(c3);
-    bg->coinsOnBoard.push_back(c4);
-    bg->coinsOnBoard.push_back(c5);
-    bg->coinsOnBoard.push_back(c6);
-    bg->coinsOnBoard.push_back(c7);
-    bg->coinsOnBoard.push_back(c8);
+    // bg->coinsOnBoard.push_back(c2);
+    // bg->coinsOnBoard.push_back(c3);
+    // bg->coinsOnBoard.push_back(c4);
+    // bg->coinsOnBoard.push_back(c5);
+    // bg->coinsOnBoard.push_back(c6);
+    // bg->coinsOnBoard.push_back(c7);
+    // bg->coinsOnBoard.push_back(c8);
 }
 
 void Game:: setStrikerPosition(int current_player)
 {
+    if(bg->coinsOnBoard[0]->coinScore != -10){
+        bg->coinsOnBoard.insert(bg->coinsOnBoard.begin(),striker);
+
+    }
     if(current_player == 0)
         {   if(prevState == 1)
             {
@@ -157,7 +161,8 @@ void Game::EventHandling(){
     SDL_PollEvent(&event);
 
     if(bg->coinsOnBoard.size()<=1){
-        //call highscore function 
+        //update highscore function 
+        setHighScore(player_total);
         run = false ;
 
     }
@@ -458,7 +463,7 @@ void Game:: cleanscr(){
 
 void Game:: setHighScore(float score){
     
-
+    cout<<"SetHigh "<<score<<"\n" ; 
     std::ofstream ofile("Leaderboard.txt");
     if (score > highestScore){
         ofile << score;
@@ -474,9 +479,10 @@ void Game:: displayHighScore(){
         std:: cout<<"Could not fetch leaderboard" << std::endl;
         return;
     }
-
-    
+   
+     cout<<" displayHighScore";
     ifile >> highestScore;
+    cout<<highestScore;
 
 }
 

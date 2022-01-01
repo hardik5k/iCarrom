@@ -6,15 +6,15 @@
 SDL_Surface* mloadimage,*mtemp ; 
 SDL_Rect mboardsrc, mboarddest ;
 Object* mbg;
-SDL_Rect btn1 = {600,150,200,100} ;    SDL_Rect btn2  = {600, 400, 200, 100 }; ; 
+SDL_Rect btn1 = {600,150,200,100} ;    SDL_Rect btn2  = {600, 400, 200, 100 };  SDL_Rect btn3  = {600, 280, 200, 100 };  
 
 
 //For Rendering font
 TTF_Font *font1;
 SDL_Color Black1 = {0, 0, 0};
-SDL_Surface *surface_message_play, *surface_message_exit;
-SDL_Texture *message_play,*message_exit;
-SDL_Rect Message_rect3,Message_rect1;
+SDL_Surface *surface_message_play, *surface_message_exit,*surface_message_help;
+SDL_Texture *message_play,*message_exit,*message_help;
+SDL_Rect Message_rect3,Message_rect1, Message_rect4 ; 
 std::string str1 = "";
 
 
@@ -59,7 +59,7 @@ void MainMenu::init(const char* title,int xcord,int ycord,int width,int height)
     }
     font1 = TTF_OpenFont("Font2.otf", 20);
     if (!font1)  printf("TTF_OpenFont: %s\n", TTF_GetError());
-    mbg = new Object("textures/Board.png",renderer,0,0);
+    mbg = new Object("textures/mainscr.png",renderer,0,0);
 
 }
 
@@ -74,6 +74,8 @@ void MainMenu::renderscr(){
 
     SDL_RenderFillRect(renderer, &btn1);
     SDL_RenderFillRect(renderer, &btn2);
+    SDL_RenderFillRect(renderer, &btn3);
+    
     // Rendering Play
     std::string newstr1 = "PLAY";
     surface_message_play = TTF_RenderText_Solid(font1, newstr1.c_str(), Black1);
@@ -113,10 +115,33 @@ void MainMenu::renderscr(){
     Message_rect3.y = 400;
     Message_rect3.w = 200;
     Message_rect3.h = 100;
+   //HELP 
+
+       
+    std::string newstr2 = "HELP";
+    surface_message_help = TTF_RenderText_Solid(font1, newstr2.c_str(), Black1);
+    if (surface_message_help == NULL)
+    {
+        printf("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+    }
+    
+    message_help = SDL_CreateTextureFromSurface(renderer, surface_message_help);
+    if ( message_help== NULL)
+    {
+        printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+    }
+    
+    SDL_FreeSurface(surface_message_help);
+    Message_rect4.x = 600;
+    Message_rect4.y = 280;
+    Message_rect4.w = 200;
+    Message_rect4.h = 100;
     SDL_RenderCopy(renderer, message_play, NULL, &Message_rect1);
     SDL_RenderCopy(renderer, message_exit, NULL, &Message_rect3);
+    SDL_RenderCopy(renderer, message_help, NULL, &Message_rect4);
     SDL_DestroyTexture(message_play);
     SDL_DestroyTexture(message_exit);
+    SDL_DestroyTexture(message_help);
     SDL_RenderPresent(renderer);
 }
 void MainMenu::cleanscr(){
@@ -177,6 +202,15 @@ void MainMenu::EventHandling(){
                         
                        
                     }
+                    if(SDL_PointInRect(&mmousepointer,&btn3)){
+                        mhitbox = &btn3; 
+                        
+                        cout<<"click succesfull btn3\n";
+                        break; 
+                        
+                       
+                    }
+                    
                 
                 }
                 break;

@@ -21,7 +21,7 @@ int main(int argc, const char* argv[]){
 	int frametime ; 
 
 	game = new Game();
-	
+	game->displayHighScore();
 
 	mgame = new MainMenu();
 	mgame->init("iCarrom",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600);
