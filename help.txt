@@ -1,0 +1,4 @@
+1. Set the striker in place using arrow keys (left and right)
+2. Press enter to confirm the position
+3. Now hover your mouse on the striker. When the pointer is on the striker, hold the mouse and pull it back in the direction of preference. Take help of the tracer to estimate the trajectory. Leave the button when satisfied 
+4. Now wait till the computer make its move.  
