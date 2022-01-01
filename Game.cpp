@@ -87,23 +87,23 @@ void Game:: init(const char* title,int xcord,int ycord,int width,int height){
     bg->coins.push_back(striker);
     bg->coins.push_back(c0);
     bg->coins.push_back(c1);
-    // bg->coins.push_back(c2);
-    // bg->coins.push_back(c3);
-    // bg->coins.push_back(c4);
-    // bg->coins.push_back(c5);
-    // bg->coins.push_back(c6);
-    // bg->coins.push_back(c7);
-    // bg->coins.push_back(c8);
+    bg->coins.push_back(c2);
+    bg->coins.push_back(c3);
+    bg->coins.push_back(c4);
+    bg->coins.push_back(c5);
+    bg->coins.push_back(c6);
+    bg->coins.push_back(c7);
+    bg->coins.push_back(c8);
     bg->coinsOnBoard.push_back(striker);
     bg->coinsOnBoard.push_back(c0); 
-    //bg->coinsOnBoard.push_back(c1);
-    // bg->coinsOnBoard.push_back(c2);
-    // bg->coinsOnBoard.push_back(c3);
-    // bg->coinsOnBoard.push_back(c4);
-    // bg->coinsOnBoard.push_back(c5);
-    // bg->coinsOnBoard.push_back(c6);
-    // bg->coinsOnBoard.push_back(c7);
-    // bg->coinsOnBoard.push_back(c8);
+    bg->coinsOnBoard.push_back(c1);
+    bg->coinsOnBoard.push_back(c2);
+    bg->coinsOnBoard.push_back(c3);
+    bg->coinsOnBoard.push_back(c4);
+    bg->coinsOnBoard.push_back(c5);
+    bg->coinsOnBoard.push_back(c6);
+    bg->coinsOnBoard.push_back(c7);
+    bg->coinsOnBoard.push_back(c8);
 }
 
 void Game:: setStrikerPosition(int current_player)
@@ -200,14 +200,22 @@ void Game::EventHandling(){
             break;
 
             case SDL_QUIT:
-                run = false;
+                // run = false;
+
+                this->snum = 0;
+                SDL_DestroyWindow(window); 
                 break;
             case SDL_WINDOWEVENT:
             if(event.window.event ==SDL_WINDOWEVENT_CLOSE)
             {
-                run = false;
+                current_player = 0;
+                player_total = 0;
+                cpu_total = 0 ;
+                STATE = 1 ;
+                prevState = 1;
                 this->snum = 0;
                 cout<<"Main game quit\n";
+                SDL_DestroyWindow(window); 
                 break;
 
             }
@@ -218,13 +226,21 @@ void Game::EventHandling(){
     {
         switch(event.type){
         case SDL_QUIT:
-            run = false;
+            this->snum = 0;
+            SDL_DestroyWindow(window);
+            // run = false;
             break;
         case SDL_WINDOWEVENT:
             if(event.window.event ==SDL_WINDOWEVENT_CLOSE)
             {
-                run = false;
+                current_player = 0;
+                player_total = 0;
+                cpu_total = 0 ;
+                STATE = 1 ;
+                prevState = 1;
+                // run = false;
                 this->snum = 0;
+                SDL_DestroyWindow(window); 
                 cout<<"Main game quit\n";
                 break;
 
@@ -306,13 +322,21 @@ void Game::EventHandling(){
         switch(event.type)
         {
             case SDL_QUIT:
-                run = false;
+                //run = false;
+                this->snum = 0;
+                SDL_DestroyWindow(window); 
                 break;
             case SDL_WINDOWEVENT:
             if(event.window.event ==SDL_WINDOWEVENT_CLOSE)
             {
-                run = false;
+                current_player = 0;
+                //run = false;
+                player_total = 0;
+                cpu_total = 0 ;
+                STATE = 1 ;
+                prevState = 1;
                 this->snum = 0;
+                SDL_DestroyWindow(window); 
                 cout<<"Main game quit\n";
                 break;
 
