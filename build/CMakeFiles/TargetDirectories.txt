@@ -1,3 +1,0 @@
-/home/mons/Desktop/iCarrom/build/CMakeFiles/rebuild_cache.dir
-/home/mons/Desktop/iCarrom/build/CMakeFiles/edit_cache.dir
-/home/mons/Desktop/iCarrom/build/CMakeFiles/iCarrom.dir

@@ -43,7 +43,7 @@ int main(int argc, const char* argv[]){
 				if(game->rungame()==false)
 				{
 				cout<<"IN THIS \n"; 
-				game->cleanscr(); 
+				
 				}
 			s=(Screens*)mgame;
 			firsttime = 1;

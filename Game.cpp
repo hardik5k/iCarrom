@@ -158,11 +158,12 @@ void Game::EventHandling(){
     SDL_Event event; 
     SDL_PollEvent(&event);
 
-    if(bg->coinsOnBoard.size()<=1){
+    if(bg->coinsOnBoard[0]->coinScore ==-10 && bg->coinsOnBoard.size()<=1 ){
         //update highscore function 
         setHighScore(player_total);
         //run = false ;
         this->snum = 0;
+        SDL_DestroyWindow(window); 
 
     }
 
