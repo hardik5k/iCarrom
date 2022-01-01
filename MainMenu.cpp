@@ -174,6 +174,7 @@ void MainMenu::EventHandling(){
         if(mlmb and event.button.button ==SDL_BUTTON_LEFT)
                 {
                     mlmb = false ;
+                    mhitbox = NULL ; 
                    
                 }
         break ; 
@@ -195,7 +196,7 @@ void MainMenu::EventHandling(){
 
                      if(SDL_PointInRect(&mmousepointer,&btn2)){
                         mhitbox = &btn2;
-                        //add help btn 
+                        
                         this->snum = 2 ;
                         cout<<"click succesfull btn2\n";
                         break; 
@@ -204,8 +205,9 @@ void MainMenu::EventHandling(){
                     }
                     if(SDL_PointInRect(&mmousepointer,&btn3)){
                         mhitbox = &btn3; 
-                        
+                        system("gedit help.txt"); 
                         cout<<"click succesfull btn3\n";
+                        this->snum = 0; 
                         break; 
                         
                        
