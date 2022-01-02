@@ -67,9 +67,9 @@ Works on Ubuntu (tested on 20.04 LTS) only due to library constraints of SDL 2.0
 
 <img src="https://github.com/hardik5k/iCarrom/blob/main/Screenshot%20from%202022-01-01%2020-39-17.png" alt="Screenshot from 2022-01-01 20-39-17" style="zoom:50%;" />
 
-<img src="https://github.com/hardik5k/iCarrom/blob/main/Screenshot%20from%202022-01-01%2020-39-17.png" alt="Screenshot from 2022-01-01 21-05-54" style="zoom:50%;" />
+<img src="https://github.com/hardik5k/iCarrom/blob/main/Screenshot%20from%202022-01-01%2021-05-54.png" alt="Screenshot from 2022-01-01 21-05-54" style="zoom:50%;" />
 
-<img src="https://github.com/hardik5k/iCarrom/blob/main/Screenshot%20from%202022-01-01%2020-39-17.png" alt="Screenshot from 2022-01-01 21-06-38" style="zoom:50%;" />
+<img src="https://github.com/hardik5k/iCarrom/blob/main/Screenshot%20from%202022-01-01%2021-06-38.png" alt="Screenshot from 2022-01-01 21-06-38" style="zoom:50%;" />
 
 ## Instructions to Run: 
 
