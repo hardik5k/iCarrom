@@ -55,7 +55,7 @@ Works on Ubuntu (tested on 20.04 LTS) only due to library constraints of SDL 2.0
 1. Created Physics engine: Resolving collision between coins, boards and net and handling collision penetration.
 2. Integrated different game states and console events.
 3. Contributed in algorithm for computer moves.
-4. Created a few classes like Coin, Board etc. 
+4. Created a few classes like Coin, Board, Vector etc. 
 
 
 
