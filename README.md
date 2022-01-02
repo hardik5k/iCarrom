@@ -52,16 +52,19 @@ Works on Ubuntu (tested on 20.04 LTS) only due to library constraints of SDL 2.0
 
 
 5.IMT2020509: Hardik Khandelwal 
+1. Created Physics engine: Resolving collision between coins, boards and net and handling collision penetration.
+2. Integrated different game states and console events.
+3. Contributed in algorithm for computer moves.
+4. Created a few classes like Coin, Board etc. 
 
 
 
 ## Features of Game:
 
-1. Realistic physics collisions between coins as well as between board and coins which obeys the concepts involving coefficient of restitution.
+1. Realistic physics collisions between coins as well as between board and coins which obey the concepts involving impulse, penetration resolution and coefficient of restitution.
 2. Leaderboard feature to keep track of high scores so that a user can find motivation to improve in the game.
 3. Tracer facility when the striker is pulled to get trajectory estimates for precise shots.
 4. Human like CPU player which adapts to the location of the coins during the game to simulate in-person game.
-5. 
 
 ## Screenshots:
 
