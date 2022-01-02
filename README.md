@@ -39,7 +39,9 @@ Works on Ubuntu (tested on 20.04 LTS) only due to library constraints of SDL 2.0
 
 3.IMT2020542: Sashank Reddy Budideti :
 
- 
+1.  Provided texture assets for Striker, coins and board 
+2.  Attempted to add sound on collision (caused instability hence not in final version)
+3. Determined dimensions and boundaries which were used by others to implement collision and other mechanics 
 
 
 
