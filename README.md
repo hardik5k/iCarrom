@@ -27,14 +27,15 @@ Works on Ubuntu (tested on 20.04 LTS) only due to library constraints of SDL 2.0
 1. Provided Starter code / object oriented structure for game design 
 2. Implemented mouse movements and click events 
 3. Integrated physics (independently made by other member) with graphics element 
-4. Screen Transitions between menu and help + game end to menu 
+4. Smoothened screen transitions between menu and help + game end to menu 
 5. Testing and debugging.
 
 2.IMT2020034 - Ankrutee Arora :
 
 1. Added Main menu 
 2. Rendered text for play and exit options
-3. Transition from menu to game. game loop conditions
+3. Transition from menu to game. 
+4. Dealt with game loop conditions
 
 3.IMT2020542: Sashank Reddy Budideti :
 
